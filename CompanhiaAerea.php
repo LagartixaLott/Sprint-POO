@@ -2,6 +2,9 @@
 
 include_once("Aeronave.php");
 
+/**
+ * Summary of CompanhiaAerea
+ */
 class CompanhiaAerea{
 
 
@@ -20,6 +23,11 @@ $this->cnpj = $cnpj_f;
 $this->sigla = $sigla_f;
 }
 
+/**
+ * Summary of adicionar_aviao
+ * @param Aeronave $aviao_f
+ * @return void
+ */
 public function adicionar_aviao(Aeronave $aviao_f){
     $aviao = $aviao_f->get_avioes();
     
@@ -31,10 +39,10 @@ public function adicionar_aviao(Aeronave $aviao_f){
 public function valida_sigla_companhia($sigla_f){
 
 }
-public function valida_cnpj(){
+public function valida_cnpj($cnpj_f){
 
 }
-public function valida_codigo(){
+public function valida_codigo($codigo_f){
 
 }
 
@@ -51,35 +59,36 @@ public function get_codigo(){
 }
 
 public function get_cnpj(){
+    return $this->cnpj;
 
 }
 
 public function get_sigla(){
-
+    return $this->sigla;
 }
 
 public function get_avioes(){
-
+    return $this->aviao;
 }
 
-public function set_nome_comp(){
-
+public function set_nome_comp(string $nome_f){
+    $this->nome = $nome_f;
 }
 
-public function set_razao(){
-
+public function set_razao(string $razao_f){
+    $this->razao_social = $razao_f;
 }
 
-public function set_codigo(){
-
+public function set_codigo(string $codigo_f){
+    $this->codigo = $codigo_f;
 }
 
-public function set_cnpj(){
-
+public function set_cnpj(string $cnpj_f){
+    $this->cnpj = $cnpj_f;
 }
 
-public function set_sigla_aero(){
-
+public function set_sigla_comp(string $sigla_f){
+    $this->sigla = $sigla_f;
 }
 
 
