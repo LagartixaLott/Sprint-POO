@@ -4,72 +4,69 @@ include_once("Aeronave.php");
 
 class CompanhiaAerea{
 
-private{
-    string $nome;
-    string $razao_social;
-    string $codigo;
-    string $cnpj;
-    string $sigla;
-    array $avioes[];
-}
-cadastro_companhia($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
+private string $nome;
+private string $razao_social;
+private string $codigo;
+private string $cnpj;
+private string $sigla;
+private array $avioes;
+
+public function cadastro_companhia($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
 
 }
 
-valida_sigla_companhia($sigla_f){
+public function valida_sigla_companhia($sigla_f){
 
 }
-valida_cnpj(){
+public function valida_cnpj(){
 
 }
-valida_codigo(){
-
-}
-
-get_nome(){
+public function valida_codigo(){
 
 }
 
-get_razao(){
+public function get_nome(){
 
 }
 
-get_codigo(){
+public function get_razao(){
 
 }
 
-get_cnpj(){
+public function get_codigo(){
 
 }
 
-get_sigla(){
+public function get_cnpj(){
 
 }
 
-get_avioes(){
+public function get_sigla(){
 
 }
 
-set_nome_comp(){
+public function get_avioes(){
 
 }
 
-set_razao(){
+public function set_nome_comp(){
 
 }
 
-set_codigo(){
+public function set_razao(){
 
 }
 
-set_cnpj(){
+public function set_codigo(){
 
 }
 
-set_sigla_aero(){
+public function set_cnpj(){
 
 }
 
+public function set_sigla_aero(){
 
+}
 
 };
