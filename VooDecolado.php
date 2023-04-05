@@ -1,37 +1,43 @@
 <?php
 include_once("VooPlanejado");
+include_once("Aeronave");
+include date_time_set;
 
 class VooDecolado extends VooPlanejado{
 private{
     Aeronave $aviao_voo;
     date_time_set $chegada;
-    Date_time_set $saida;
+    date_time_set $saida;
     VooPlanejado $voo_anunciado;
-
 }
 
-    voo_decolado($voo_anunciado_f,$saida_f,$chegada_f,$Aviao_voo_f){
-
+    public function voo_decolado($voo_anunciado_f,$saida_f,$chegada_f,$Aviao_voo_f){
+        $this->voo_anunciado = $voo_anunciado_f;
+        $this->saida = $saida_f;
+        $this->chegada = $chegada_f;
+        $this->aviao_voo = $Aviao_voo_f;
     }
-    colocar_no_historico(){
-
-    }
-
-    get_chegada(){
-
-    }
-
-    get_saida(){
-
-    }
-
-    get_voo_anunciado(){
-
-    }
-    get_aviao_voo(){
-
-
+    public function colocar_no_historico(){
+        return [
+            'codigo' -> $this->voos_anunciado->get_codigo(),
+            'origem' -> $this->voos_anunciado->get_origem(),
+            'destino' -> $this->voos_anunciado->get_destino(),
+            'saida' -> $this->saida,
+            'chegada' -> $this->chegada,
+        ]
     }
 
+    public function get_chegada(){
+        return $this->chegada;
+    }
+    public function get_saida(){
+        return $this->saida;
+    }
+    public function get_voo_anunciado(){
+        return $this->voo_anunciado;
+    }
+    public function get_aviao_voo(){
+        return $this->aviao_voo;
+    }
 }
 
