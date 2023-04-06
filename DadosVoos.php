@@ -1,28 +1,14 @@
 <?php
 include_once("VooDecolado");
 class DadosVoos{
-    private{
-    array $voos_agenda[];
-    array $voos_historico[];
-    }   
+    protected array $voos_agenda;
+    protected array $voos_historico;
 
     public function DadosVoos(){
-    $this->voos_agenda = [];
-    $this->voos_historico = vooplanejado::get_historico();
+    $this->voos_agenda = VooPlanejado::$historico_planejado;
+    $this->voos_historico = VooDecolado::$historico_executado;
     }
-
-    ver_historico_dia(date_time_set $dia_f){
-
-    }
-    ver_agenda(){
-        return $this->voos_agenda;
-    }
-
-    ver_historico(){
-        return $this->voos_historico;
-    }
-
-    ver_historico_dia(date_time_set $dia_f){
+    public function ver_historico_dia(DateTime $dia_f){
         $historico_dia = [];
         foreach($this->voos_historico as $voo){
             if($voo->get_chegada() == $dia_f){
@@ -31,4 +17,11 @@ class DadosVoos{
         }
         return $historico_dia;
     }
+    public function ver_agenda(){
+        return $this->voos_agenda;
+    }
+
+    public function ver_historico(){
+        return $this->voos_historico;
+    }    
 }

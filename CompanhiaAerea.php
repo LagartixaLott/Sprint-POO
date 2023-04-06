@@ -4,12 +4,12 @@ include_once("Aeronave.php");
 
 class CompanhiaAerea{
 
-private string $nome;
-private string $razao_social;
-private string $codigo;
-private string $cnpj;
-private string $sigla;
-private array $avioes;
+protected string $nome;
+protected string $razao_social;
+protected string $codigo;
+protected string $cnpj;
+protected string $sigla;
+protected array $avioes;
 
 public function cadastro_companhia($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
 

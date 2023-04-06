@@ -7,70 +7,71 @@ include_once("CompanhiaAerea.php");
 enum Frequencia{
 
 }
+#array para guardar os voos planejado
 
+class VooPlanejado{
 
-class VooPlanejado extends DadosVoos{
+protected string $codigo;
+protected Aeroporto $Aeroporto_origem;
+protected Aeroporto $Aeroporto_destino;
+protected DateTime $hora_agendada_chegada;
+protected DateTime $hora_agendada_saida;
+protected Aeronave $Aviao_esperado;
+protected frequencia $Frequencia_voo;
+public static array $historico_planejado = [];    
 
-private{
-    string $codigo;
-    Aeroporto $Aeroporto_origem;
-    Aeroporto $Aeroporto_destino;
-    date_time_set $hora_agendada_chegada;
-    date_time_set $hora_agendada_saida;
-    Aeronave $Aviao_esperado;
-    frequencia $Frequencia_voo;
-    
+public function voo_planejado($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
+    $this->codigo = $codigo_f;
+    $this->Aeroporto_origem = $Aerop_origem_f;
+    $this->Aeroporto_destino = $Aerop_destino_f;
+    $this->hora_agendada_chegada = $Hora_agen_chegada_f;
+    $this->hora_agendada_saida = $Hora_agen_saida_f;
+    $this->Aviao_esperado = $Aviao_esperado_f;
+    $this->Frequencia_voo = $frequencia_voo_f;
+    self::$historico_planejado[] = $this;
 }
 
-voo_planejado($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
-
-}
-
-validar_codigo(){
-
-}
-
-get_frquencia_voo(){
-
-}
-
-get_origem(){
+public function validar_codigo(){
 
 }
 
-get_destino(){
+public function get_frquencia_voo(){
 
 }
 
-get_hora_agenda_chegada(){
+public function get_origem(){
 
 }
 
-get_hora_agenda_saida(){
+public function get_destino(){
 
 }
 
-get_aviao_marcado(){
+public function get_hora_agenda_chegada(){
 
 }
 
-colocar_na_agenda(){
+public function get_hora_agenda_saida(){
 
 }
 
-set_frequencia(){
+public function get_aviao_marcado(){
 
 }
 
-set_aviao_esp(){
+public function set_frequencia(){
 
 }
 
-set_hora_cheg_agend(){
+public function set_aviao_esp(){
 
 }
 
-set_hora_said_agend(){
+public function set_hora_cheg_agend(){
+
+}
+
+public function set_hora_said_agend(){
 
 }
 

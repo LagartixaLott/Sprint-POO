@@ -4,12 +4,12 @@ include_once("CompanhiaAerea.php");
 
 class Aeronave{
 
-private string $fabricante;
-private string $modelo;
-private float $carga;
-private int $pasageiros;
-private string $registro;
-private CompanhiaAerea $CompanhiaAerea_;
+protected string $fabricante;
+protected string $modelo;
+protected float $carga;
+protected int $pasageiros;
+protected string $registro;
+protected CompanhiaAerea $CompanhiaAerea_;
 
 
 public function cadastro_aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){

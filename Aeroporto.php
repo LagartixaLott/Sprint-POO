@@ -1,54 +1,54 @@
 <?php
 
 class Aeroporto {
-private{
-string $sigla;
-string $cidade;
-string $estado;
-string $nome;
-}
-cadastro_aeroporto(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
+protected string $sigla;
+protected string $cidade;
+protected string $estado;
+protected string $nome;
+
+public function cadastro_aeroporto(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
 
   //  
 }
 
-validar_sigla_aero(string $sigla_s){
+public function validar_sigla_aero(string $sigla_s){
     //
 }
 
-get_sigla_aero(){
+public function get_sigla_aero(){
 
 }
 
-get_cidade(){
+public function get_cidade(){
 
 }
 
-get_estado(){
-
-
-}
-
-get_nome_aero(){
-
-}
-
-set_sigla_aero(string $sigla_f){
-
-}
-
-set_cidade(string $cidade_f){
+public function get_estado(){
 
 
 }
 
-set_estado(string $estado_f){
+public function get_nome_aero(){
+
+}
+
+public function set_sigla_aero(string $sigla_f){
+
+}
+
+public function set_cidade(string $cidade_f){
 
 
 }
 
-set_nome(string $nome_f)
+public function set_estado(string $estado_f){
 
 
+}
+
+public function set_nome(string $nome_f){
+
+
+}
 
 };
