@@ -12,7 +12,7 @@ protected string $registro;
 protected CompanhiaAerea $CompanhiaAerea_;
 
 
-public function cadastro_aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
+public function __construct($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
     $this->fabricante = $fabricante_f;
     $this->modelo = $modelo_f;
     $this->carga = $carga_f;

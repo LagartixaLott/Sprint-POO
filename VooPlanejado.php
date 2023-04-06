@@ -20,7 +20,7 @@ protected Aeronave $Aviao_esperado;
 protected frequencia $Frequencia_voo;
 public static array $historico_planejado = [];    
 
-public function voo_planejado($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
+public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
     $this->codigo = $codigo_f;
     $this->Aeroporto_origem = $Aerop_origem_f;
     $this->Aeroporto_destino = $Aerop_destino_f;

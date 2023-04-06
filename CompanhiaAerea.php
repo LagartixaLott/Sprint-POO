@@ -11,7 +11,7 @@ protected string $cnpj;
 protected string $sigla;
 protected array $avioes;
 
-public function cadastro_companhia($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
+public function __construct($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
     $this->nome = $nome_f;
     $this->razao_social = $razao_f;
     $this->codigo = $codigo_f;

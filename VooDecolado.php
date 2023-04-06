@@ -9,7 +9,7 @@ class VooDecolado extends VooPlanejado{
     protected VooPlanejado $voo_anunciado;
     public static array $historico_executado = []; 
 
-    public function voo_decolado($voo_anunciado_f,$saida_f,$chegada_f,$Aviao_voo_f){
+    public function __construct($voo_anunciado_f,$saida_f,$chegada_f,$Aviao_voo_f){
         $this->voo_anunciado = $voo_anunciado_f;
         $this->saida = $saida_f;
         $this->chegada = $chegada_f;

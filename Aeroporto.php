@@ -6,7 +6,7 @@ protected string $cidade;
 protected string $estado;
 protected string $nome;
 
-public function cadastro_aeroporto(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
+public function __construct(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
     $this->sigla = $sigla_f;
     $this->cidade = $cidade_f;
     $this->estado = $estado_f;
