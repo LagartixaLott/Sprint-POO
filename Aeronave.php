@@ -4,6 +4,10 @@ include_once("CompanhiaAerea.php");
 
 class Excecao_Resgistro_aviao{
  public  string $registro_erro;
+
+ public function erro(string $s){
+    $this->$registro_erro=$s;
+ } 
 }
 
 class Aeronave{
@@ -19,36 +23,47 @@ class Aeronave{
 
 
 public function cadastro_aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
-public Aeronave $a;
 $a.set_fabricante($fabricante_f);
 $a.set_modelo($modelo_f);
 $a.set_carga($carga_f);
 $a.set_passageiro($passageiros_f);
 $a.set_registro($registro_f);
 $a.set_companhia($companhiaAerea_f);
+return $a;
 }
 
 public function validar_registro($registro_f){
 if(sizeof($registro_f)!=6){
-   public Excecao_Resgistro_aviao $e.$registro_erro=$registro_f;
-     throw new Exception("Error Processing Request", $e);
-    
+    $e.erro($registro_f);
+    throw new Exception("Error Processing Request", $e);
 }
 elseif($registro_f[1]!="P"){
-   public Excecao_Resgistro_aviao $e.$registro_erro=$registro_f;
-     throw new Exception("Error Processing Request", $e);
-    
+    $e.erro($registro_f);
+    throw new Exception("Error Processing Request", $e);
 }
 
 elseif($registro_f[3]!="-"){
-   public  Excecao_Resgistro_aviao $e.$registro_erro=$registro_f;
+    $e.erro($registro_f);
     throw new Exception("Error Processing Request", $e);
     
 }
 elseif($registro_f[2]!=("P" || "S" || "R" || "T")){
-    Excecao_Resgistro_aviao $e.$registro_erro=$registro_f;
+   $e.erro($registro_f);
     throw new Exception("Error Processing Request", $e);
     
+}
+elseif($registro_f[4]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
+    $e.erro($registro_f);
+    throw new Exception("Error Processing Request", $e);
+}
+elseif($registro_f[5]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
+    $e.erro($registro_f);
+    throw new Exception("Error Processing Request", $e);
+}
+
+elseif($registro_f[6]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
+    $e.erro($registro_f);
+    throw new Exception("Error Processing Request", $e);
 }
 
 
