@@ -2,7 +2,7 @@
 include_once("Aeronave.php");
 include_once("VooPlanejado.php");
 
-class VooDecolado{
+class VooDecolado extends VooPlanejado{
     protected Aeronave $aviao_voo;
     protected DateTime $chegada;
     protected DateTime $saida;
@@ -15,15 +15,6 @@ class VooDecolado{
         $this->chegada = $chegada_f;
         $this->aviao_voo = $Aviao_voo_f;
         self::$historico_executado[] = $this;
-    }
-    public function colocar_no_historico(){
-        return [
-            'codigo' -> $this->voos_anunciado->get_codigo(),
-            'origem' -> $this->voos_anunciado->get_origem(),
-            'destino' -> $this->voos_anunciado->get_destino(),
-            'saida' -> $this->saida,
-            'chegada' -> $this->chegada,
-        ];
     }
     public function get_chegada(){
         return $this->chegada;

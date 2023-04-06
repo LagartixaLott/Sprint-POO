@@ -3,7 +3,6 @@ include_once("VooDecolado");
 class DadosVoos{
     protected array $voos_agenda;
     protected array $voos_historico;
-
     public function DadosVoos(){
     $this->voos_agenda = VooPlanejado::$historico_planejado;
     $this->voos_historico = VooDecolado::$historico_executado;

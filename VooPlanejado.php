@@ -31,48 +31,55 @@ public function voo_planejado($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_a
     self::$historico_planejado[] = $this;
 }
 
-public function validar_codigo(){
-
+public function validar_codigo($codigo){
+//Codigo composto por 2 letras e 4 numeros
+    $letras = substr($codigo,0,2);
+    $numeros = substr($codigo,2,4);
+    if (ctype_alpha($letras) && ctype_digit($numeros)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
-public function get_frquencia_voo(){
-
+public function get_frequencia_voo(){
+    return $this->Frequencia_voo;
 }
 
 public function get_origem(){
-
+    return $this->Aeroporto_origem;
 }
 
 public function get_destino(){
-
+    return $this->Aeroporto_destino;
 }
 
 public function get_hora_agenda_chegada(){
-
+    return $this->hora_agendada_chegada;
 }
 
 public function get_hora_agenda_saida(){
-
+    return $this->hora_agendada_saida;
 }
 
 public function get_aviao_marcado(){
-
+    return $this->Aviao_esperado;
 }
 
 public function set_frequencia(){
-
+    return $this->Frequencia_voo;
 }
 
 public function set_aviao_esp(){
-
+    return $this->Aviao_esperado;
 }
 
 public function set_hora_cheg_agend(){
-
+    return $this->hora_agendada_chegada;
 }
 
 public function set_hora_said_agend(){
-
+    return $this->hora_agendada_saida;
 }
 
 
