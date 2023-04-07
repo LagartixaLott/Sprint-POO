@@ -24,12 +24,11 @@ $this->avioes = array();
 
 
     public function adicionar_aviao(Aeronave $aviao_f){
-        $aviao = $aviao_f->get_avioes();
-        array_push($this->$avioes, $aviao_f)
+        array_push($this->avioes, $aviao_f);
 }
 
 //sigla precisa ser formada por duas letras 
-public function valida_sigla_companhia($sigla_f){
+public function validar_sigla_companhia($sigla_f){
     if(ctype_alpha($this->sigla) == true && strlen($this->sigla) ==2){
         return true;
     }else{
@@ -97,7 +96,7 @@ public function set_cnpj(string $cnpj_f){
 }
 
 public function set_sigla_comp(string $sigla_f){
-    if(self::valida_sigla_companhia($sigla_f) == true){
+    if(self::validar_sigla_companhia($sigla_f) == true){
         $this->sigla = $sigla_f;
         return;
     }else{
