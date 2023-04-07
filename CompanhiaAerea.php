@@ -2,9 +2,7 @@
 
 include_once("Aeronave.php");
 
-/**
- * Summary of CompanhiaAerea
- */
+
 class CompanhiaAerea{
 
 
@@ -13,37 +11,42 @@ protected string $razao_social;
 protected string $codigo;
 protected string $cnpj;
 protected string $sigla;
-protected $avioes = array();
+protected $avioes;
 
-public function cadastro_companhia($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
+public function __construct($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
 $this->nome = $nome_f;
 $this->razao_social = $razao_f;
 $this->codigo = $codigo_f;
 $this->cnpj = $cnpj_f;
 $this->sigla = $sigla_f;
+$this->avioes = array();
 }
 
-/**
- * Summary of adicionar_aviao
- * @param Aeronave $aviao_f
- * @return void
- */
-public function adicionar_aviao(Aeronave $aviao_f){
-    $aviao = $aviao_f->get_avioes();
-    
-    if( !isset ($this->adicionar_aviao[$aviao])){
-        $this->adicionar_aviao[aviao] = array();
+
+    public function adicionar_aviao(Aeronave $aviao_f){
+        $aviao = $aviao_f->get_avioes();
+        array_push($this->$avioes, $aviao_f)
+}
+
+//sigla precisa ser formada por duas letras 
+public function valida_sigla_companhia($sigla_f){
+    if(ctype_alpha($this->sigla) == true && strlen($this->sigla) ==2){
+        return true;
+    }else{
+        return false;
     }
 }
-
-public function valida_sigla_companhia($sigla_f){
+//cnpj precisa ser formado por 14 dígitos 
+public function validar_cnpj($cnpj_f){
+    if(ctype_digit($this->cnpj) && strlen($this->cnpj) == 14){
+        return true;
+    }else{
+        return false;
+    }
 
 }
-public function valida_cnpj($cnpj_f){
-
-}
-public function valida_codigo($codigo_f){
-
+//obs: ainda não há especificações quanto ao formato do código da companhia 
+public function validar_codigo($codigo_f){
 }
 
 public function get_nome(){
@@ -68,7 +71,7 @@ public function get_sigla(){
 }
 
 public function get_avioes(){
-    return $this->aviao;
+    return $this->avioes;
 }
 
 public function set_nome_comp(string $nome_f){
@@ -84,12 +87,23 @@ public function set_codigo(string $codigo_f){
 }
 
 public function set_cnpj(string $cnpj_f){
-    $this->cnpj = $cnpj_f;
+    if(self::validar_cnpj($cnpj_f) == true){
+        $this->cnpj = $cnpj_f;
+        return;
+    }else{
+        echo "Cnpj inválido";
+        return;
+    }
 }
 
 public function set_sigla_comp(string $sigla_f){
-    $this->sigla = $sigla_f;
+    if(self::valida_sigla_companhia($sigla_f) == true){
+        $this->sigla = $sigla_f;
+        return;
+    }else{
+        echo "Sigla inválida";
+        return;
+    }
 }
-
 
 };
