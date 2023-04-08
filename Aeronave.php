@@ -4,76 +4,80 @@ include_once("CompanhiaAerea.php");
 
 class Aeronave{
 
-private{
-    string $fabricante;
-    string $modelo;
-    float $carga;
-    int $pasageiros;
-    string $registro;
-    CompanhiaAerea $CompanhiaAerea_;
+
+    protected string $fabricante;
+    protected string $modelo;
+    protected float $carga;
+    protected int $passageiros;
+    protected string $registro;
+    protected CompanhiaAerea $CompanhiaAerea_;
+
+
+
+public function __construct ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
+    $this->fabricante = $fabricante_f;
+    $this->modelo = $modelo_f;
+    $this->carga = $carga_f;
+    $this->passageiros = $passageiros_f;
+    $this->registro = $registro_f;
+    $this->CompanhiaAerea_ = $companhiaAerea_f;
+}
+
+public function validar_registro($registro_f){
 
 }
 
-cadastro_aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
-
-
-}
-
-validar_registro($registro_f){
+public function get_fabricante(){
 
 }
 
-get_fabricante(){
-
-}
-
-get_modelo(){
+public function get_modelo(){
   
 }
 
-get_carga(){
+public function get_carga(){
 
 
 }
 
-get_passageiro(){
+public function get_passageiro(){
 
 
 }
 
-get_registro(){
+public function get_registro(){
 
 
 }
 
-get_companhia_aerea(){
+public function get_companhia_aerea(){
 
 
 }
 
-set_fabricante($fabricante_f){
+public function set_fabricante($fabricante_f){
 
 }
 
-set_modelo($modelo_f){
+public function  set_modelo($modelo_f){
 
 }
 
-set_carga($carga_f){
+public function set_carga($carga_f){
 
 }
 
-set_passageiro($passageiro_f){
-
-
-}
-
-set_registro($registro_f){
+public function set_passageiro($passageiro_f){
 
 
 }
 
-set_companhia(CompanhiaAerea $companhia_aerea_f){
+public function set_registro($registro_f){
+
+
+}
+
+public function set_companhia(CompanhiaAerea $companhia_aerea_f){
 }
 
 };
