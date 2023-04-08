@@ -1,61 +1,105 @@
 <?php
 
-class Aeroporto {
+include_once("CompanhiaAerea.php");
 
-  protected string $sigla;
-  protected string $cidade;
-  protected string $estado;
-  protected string $nome;
+class Aeronave{
+
+ protected string $fabricante;
+ protected string $modelo;
+ protected float $carga = 0.0;
+ protected int $pasageiros;
+ protected string $registro;
+ protected CompanhiaAerea $CompanhiaAerea_;
 
 
-  public function cadastro_aeroporto(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
-    $this->sigla = $sigla_f;
-    $this->cidade = $cidade_f;
-    $this->estado = $estado_f;
-    $this->nome = $nome_f;
-  }
 
-  public function validar_sigla_aero(string $sigla_s){
-    if(ctype_alpha($sigla_s) && strlen($sigla_s)==3) {
-      return $sigla_s;
-    } else {
-      throw new Exception('A sigla deve ser composta por 3 letras');
-    }
-  }
-  public function get_sigla_aero(){
-    return $this->sigla;
-  }
+public function Aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
+$this->set_fabricante($fabricante_f);
+$this->set_modelo($modelo_f);
+$this->set_carga($carga_f);
+$this->set_passageiro($passageiros_f);
+$this->set_registro($registro_f);
+$this->set_companhia($companhiaAerea_f);
+}
 
-  public function get_cidade(){
-    return $this->cidade;
-  }
+public function validar_registro($registro_f){
+if(sizeof($registro_f)!=6){
+    throw new Exception('Tamanho invalido');
+}
+elseif($registro_f[1]!="P"){
+    throw new Exception("Erro no primeiro digito");
+}
 
-  public function get_estado(){
-    return $this->estado;
-  }
+elseif($registro_f[3]!="-"){
+    throw new Exception("Erro no terceiro digito");
+}
 
-  public function get_nome_aero(){
-    return $this->nome;
-  }  
+elseif($registro_f[2]!=("P" || "S" || "R" || "T")){
+    throw new Exception('Erro no segundo digito');
+}
 
-  public function set_sigla_aero(string $sigla_f){
-    try {
-        self::validar_sigla_aero($sigla_f);
-    } catch (Exception $s) {
-        return $s;
-    }
-    return $this->sigla = $sigla_f;
-  }
-  public function set_cidade(string $cidade_f){
-    $this->cidade = $cidade_f;
-  }
+elseif($registro_f[4]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
+    throw new Exception('Erro no quarto digito');
+}
+elseif($registro_f[5]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
+    throw new Exception('Erro no quinto digito');
+}
 
-  public function set_estado(string $estado_f){
-    $this->estado = $estado_f;
-  } 
+elseif($registro_f[6]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
+    throw new Exception('Erro no sexto digito');
+}
+else return true;
+}
 
-  public function set_nome(string $nome_f){
-    $this->nome = $nome_f;
-  }
+public function get_fabricante(){
+  return $this->fabricante;
+}
 
+public function get_modelo(){
+  return $this->modelo;
+}
+
+public function get_carga(){
+  return $this->carga;
+}
+
+public function get_passageiro(){
+  return $this->pasageiros;
+}
+
+public function get_registro(){
+  return $this->registro;
+}
+
+public function get_companhia_aerea(){
+  return $this->CompanhiaAerea_;
+}
+
+public function set_fabricante($fabricante_f){
+  $this->fabricante = $fabricante_f;
+}
+
+public function set_modelo($modelo_f){
+  $this->modelo=$modelo_f;
+}
+
+public function set_carga($carga_f){
+  $this->carga=$carga_f;
+}
+
+public function set_passageiro($passageiro_f){
+  $this->pasageiros=$passageiro_f;
+}
+
+public function set_registro($registro_f){
+try{
+  self::validar_registro($registro_f);
+}catch(Exception $registro_erro){
+  return;
+}
+$this->registro=$registro_f;
+}
+public function set_companhia(CompanhiaAerea $companhia_aerea_f){
+  $this->CompanhiaAerea_=$companhia_aerea_f;
+}
 };
