@@ -23,13 +23,12 @@ class Aeronave{
 
 
 public function cadastro_aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
-$a.set_fabricante($fabricante_f);
-$a.set_modelo($modelo_f);
-$a.set_carga($carga_f);
-$a.set_passageiro($passageiros_f);
-$a.set_registro($registro_f);
-$a.set_companhia($companhiaAerea_f);
-return $a;
+$this->set_fabricante($fabricante_f);
+$this->set_modelo($modelo_f);
+$this->set_carga($carga_f);
+$this->set_passageiro($passageiros_f);
+$this->set_registro($registro_f);
+$this->set_companhia($companhiaAerea_f);
 }
 
 public function validar_registro($registro_f){
@@ -65,7 +64,7 @@ elseif($registro_f[6]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"
     $e.erro($registro_f);
     throw new Exception("Error Processing Request", $e);
 }
-
+else return true;
 
 }
 
