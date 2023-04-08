@@ -4,9 +4,8 @@ include_once("CompanhiaAerea.php");
 
 class Aeronave{
 
-private{
-    string $fabricante;
-    string $modelo;
+    protected string $fabricante;
+    protected string $modelo;
     float $carga;
     int $pasageiros;
     string $registro;
