@@ -19,9 +19,9 @@ public function __construct($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
     $this->set_sigla($sigla_f);
 }
 
-public function valida_sigla_companhia(){
+public function valida_sigla_companhia($sigla_f){
 // Deve ser formado por 2 letras
-    if (ctype_alpha($this->sigla) && strlen($this->sigla) == 2){
+    if (ctype_alpha($sigla_f) && strlen($sigla_f) == 2){
         return true;
     }else{
         return false;
