@@ -20,7 +20,7 @@ class Aeronave{
 
 
 
-public function cadastro_aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
+public function Aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
 $this->set_fabricante($fabricante_f);
 $this->set_modelo($modelo_f);
 $this->set_carga($carga_f);
