@@ -5,7 +5,10 @@ include_once("Aeroporto.php");
 include_once("CompanhiaAerea.php");
 
 enum Frequencia{
-
+    const DIARIA = 1;
+    const SEMANAL = 2;
+    const QUINZENAL = 3;
+    const MENSAL = 4;
 }
 #array para guardar os voos planejado
 
@@ -21,13 +24,13 @@ protected frequencia $Frequencia_voo;
 public static array $historico_planejado = [];    
 
 public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
-    $this->codigo = $codigo_f;
-    $this->Aeroporto_origem = $Aerop_origem_f;
-    $this->Aeroporto_destino = $Aerop_destino_f;
-    $this->hora_agendada_chegada = $Hora_agen_chegada_f;
-    $this->hora_agendada_saida = $Hora_agen_saida_f;
-    $this->Aviao_esperado = $Aviao_esperado_f;
-    $this->Frequencia_voo = $frequencia_voo_f;
+    $this-> set_codigo($codigo_f);
+    $this-> set_origem($Aerop_origem_f);
+    $this->set_destino($Aerop_destino_f);
+    $this->set_hora_cheg_agend($Hora_agen_chegada_f);
+    $this->set_hora_said_agend($Hora_agen_saida_f);
+    $this->set_aviao_esp($Aviao_esperado_f);
+    $this->set_frequencia($frequencia_voo_f);
     self::$historico_planejado[] = $this;
 }
 
@@ -62,25 +65,67 @@ public function get_hora_agenda_saida(){
     return $this->hora_agendada_saida;
 }
 
+public function get_codigo(){
+    return $this->codigo;
+}
 public function get_aviao_marcado(){
     return $this->Aviao_esperado;
 }
 
-public function set_frequencia(){
-    return $this->Frequencia_voo;
+public function set_frequencia($frequencia_voo_f){
+    if ($frequencia_voo_f instanceof Frequencia){
+        $this->Frequencia_voo = $frequencia_voo_f;
+    } else{
+        echo "Frequencia invalida";
+    }
 }
 
-public function set_aviao_esp(){
-    return $this->Aviao_esperado;
+public function set_aviao_esp($Aviao_esperado_f){
+    if ($Aviao_esperado_f instanceof Aeronave){
+        $this->Aviao_esperado = $Aviao_esperado_f;
+    } else{
+        echo "Aeronave invalida";
+    }
 }
 
-public function set_hora_cheg_agend(){
-    return $this->hora_agendada_chegada;
+public function set_hora_cheg_agend($hora_agendada_chegada_f){
+    if ($hora_agendada_chegada_f instanceof DateTime){
+        $this->hora_agendada_chegada = $hora_agendada_chegada_f;
+    } else{
+        echo "Hora invalida";
+    }
 }
 
-public function set_hora_said_agend(){
-    return $this->hora_agendada_saida;
+public function set_hora_said_agend($hora_agendada_saida_f){
+    if ($hora_agendada_saida_f instanceof DateTime){
+        $this->hora_agendada_saida = $hora_agendada_saida_f;
+    } else{
+        echo "Hora invalida";
+    }
 }
 
-
-};
+public function set_origem($Aerop_origem_f){
+    if ($Aerop_origem_f instanceof Aeroporto){
+        $this->Aeroporto_origem = $Aerop_origem_f;
+    } else{
+        echo "Aeroporto de origem invalido";
+    }
+}
+public function set_destino($Aerop_destino_f){
+    if ($Aerop_destino_f instanceof Aeroporto){
+        $this->Aeroporto_destino = $Aerop_destino_f;
+    } else{
+        echo "Aeroporto de destino invalido";
+    }
+}
+public function set_codigo($codigo_f){
+    if ($this->validar_codigo($codigo_f)){
+        $this->codigo = $codigo_f;
+    } else{
+        echo "Codigo invalido";
+    }
+}
+public function get_hist_planejado(){
+    return self::$historico_planejado;
+}
+}
