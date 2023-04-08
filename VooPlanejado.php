@@ -11,6 +11,7 @@ enum Frequencia{
     case quinzenal=15;
     case mensal=30; 
 }
+#array para guardar os voos planejado
 
 class VooPlanejado{
 
@@ -53,20 +54,30 @@ public function get_frequencia_voo(){
 
 public function get_origem(){
     return $this->Aeroporto_origem;
+public function get_origem(){
+    return $this->Aeroporto_origem;
 }
 
+public function get_destino(){
+    return $this->Aeroporto_destino;
 public function get_destino(){
     return $this->Aeroporto_destino;
 }
 
 public function get_hora_agenda_chegada(){
     return $this->hora_agendada_chegada;
+public function get_hora_agenda_chegada(){
+    return $this->hora_agendada_chegada;
 }
 
 public function get_hora_agenda_saida(){
     return $this->hora_agendada_saida;
+public function get_hora_agenda_saida(){
+    return $this->hora_agendada_saida;
 }
 
+public function get_aviao_marcado(){
+    return $this->Aviao_esperado;
 public function get_aviao_marcado(){
     return $this->Aviao_esperado;
 }
