@@ -14,8 +14,8 @@ public function __construct(string $sigla_f,string $cidade_f,string $estado_f,st
 }
 
 public function validar_sigla_aero(string $sigla_s){
-//A sigla deve ser formada por duas letras
-    if (ctype_alpha($sigla_s) && strlen($sigla_s) == 2){
+//A sigla deve ser formada por três letras
+    if (ctype_alpha($sigla_s) && strlen($sigla_s) == 3){
         return true;
     }else{
         return false;
@@ -69,14 +69,20 @@ public function set_estado(string $estado_f){
     }else{
       throw new Exception("Estado inválido");
     }
-}}
+  }catch(Exception $e){
+    echo $e->getMessage();
+  }
+}
 
 public function set_nome(string $nome_f){
   try{
-    if (ctype_alpha($nome_f)){
+    if (is_string($nome_f)){
       $this->nome = $nome_f;
     }else{
       throw new Exception("Nome inválido");
     }
-}}
+  }catch(Exception $e){
+    echo $e->getMessage();
+  }
+}
 }

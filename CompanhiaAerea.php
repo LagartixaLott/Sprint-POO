@@ -76,7 +76,7 @@ public function set_nome_comp($nome_f){
 
 public function set_razao($razao_f){
     try{
-        if (ctype_alpha($razao_f)){
+        if (is_string($razao_f)){
             $this->razao_social = $razao_f;
         }else{
             throw new Exception("Razão social inválida");
@@ -98,8 +98,11 @@ public function set_codigo($codigo){
     }
 }
 public function set_cnpj($cnpj_f){
+    //formato de cnpj = 15.488.222/0001-72
+    //filtrar caracteres especiais
+    $numbersOnly = preg_replace("/[^0-9]/", "", $cnpj_f);;
     try{
-        if ($this->valida_cnpj($cnpj_f)){
+        if ($this->valida_cnpj($numbersOnly)){
             $this->cnpj = $cnpj_f;
         }else{
             throw new Exception("CNPJ inválido");
