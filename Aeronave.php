@@ -111,7 +111,7 @@ public function set_registro($registro_f){
 try{
 validar_registro($registro_f);
 }catch(Excecao_Resgistro_aviao $registro_erro){
-  break function;
+  return;
 }
 $this->registro=$registro_f;
 }
