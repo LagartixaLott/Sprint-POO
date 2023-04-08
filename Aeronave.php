@@ -3,12 +3,10 @@
 include_once("CompanhiaAerea.php");
 
 class Excecao_Resgistro_aviao{
- public  string $registro_erro;
+ public  string $registro_erro="Erro no registro";
 
- public function erro(string $s){
-    $this->$registro_erro=$s;
  } 
-}
+
 
 class Aeronave{
 
@@ -22,7 +20,7 @@ class Aeronave{
 
 
 
-public function cadastro_aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
+public function Aeronave ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
 $this->set_fabricante($fabricante_f);
 $this->set_modelo($modelo_f);
 $this->set_carga($carga_f);
@@ -33,36 +31,34 @@ $this->set_companhia($companhiaAerea_f);
 
 public function validar_registro($registro_f){
 if(sizeof($registro_f)!=6){
-    $e.erro($registro_f);
-    throw new Exception("Error Processing Request", $e);
+    
+    throw new Excecao_Resgistro_aviao("Error Processing Request");
 }
 elseif($registro_f[1]!="P"){
-    $e.erro($registro_f);
-    throw new Exception("Error Processing Request", $e);
+    
+    throw new Excecao_Resgistro_aviao("Error Processing Request");
 }
 
 elseif($registro_f[3]!="-"){
-    $e.erro($registro_f);
-    throw new Exception("Error Processing Request", $e);
     
+    throw new Excecao_Resgistro_aviao("Error Processing Request");
 }
 elseif($registro_f[2]!=("P" || "S" || "R" || "T")){
-   $e.erro($registro_f);
-    throw new Exception("Error Processing Request", $e);
+  
+    throw new Excecao_Resgistro_aviao("Error Processing Request");
     
 }
 elseif($registro_f[4]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
-    $e.erro($registro_f);
-    throw new Exception("Error Processing Request", $e);
+    
+    throw new Excecao_Resgistro_aviao("Error Processing Request");
 }
 elseif($registro_f[5]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
-    $e.erro($registro_f);
-    throw new Exception("Error Processing Request", $e);
+    throw new Excecao_Resgistro_aviao("Error Processing Request");
 }
 
 elseif($registro_f[6]!=("A"||"B"||"C"||"D"||"E"||"F"||"G"||"H"||"I"||"J"||"K"||"L"||"M"||"N"||"O"||"P"||"Q"||"R"||"S"||"T"||"U"||"V"||"W"||"X"||"Y"||"Z")){
-    $e.erro($registro_f);
-    throw new Exception("Error Processing Request", $e);
+    
+    throw new Excecao_Resgistro_aviao("Error Processing Request");
 }
 else return true;
 
@@ -114,12 +110,11 @@ $this->$pasageiros=$passageiro_f;
 public function set_registro($registro_f){
 try{
 validar_registro($registro_f);
+}catch(Excecao_Resgistro_aviao $registro_erro){
+  break function;
+}
 $this->registro=$registro_f;
-}catch(Excecao_Resgistro_aviao){
-    echo "registro invalido";
 }
-}
-
 public function set_companhia(CompanhiaAerea $companhia_aerea_f){
 $this->$CompanhiaAerea=$companhia_aerea_f;
 }
