@@ -14,14 +14,6 @@ class Aeronave{
 
 
 
-public function __construct ($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
-    $this->fabricante = $fabricante_f;
-    $this->modelo = $modelo_f;
-    $this->carga = $carga_f;
-    $this->passageiros = $passageiros_f;
-    $this->registro = $registro_f;
-    $this->CompanhiaAerea_ = $companhiaAerea_f;
-}
 
 public function validar_registro($registro_f){
 
