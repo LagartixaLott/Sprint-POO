@@ -12,11 +12,11 @@ protected string $sigla;
 protected array $avioes;
 
 public function __construct($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
-    $this->nome = $nome_f;
-    $this->razao_social = $razao_f;
-    $this->codigo = $codigo_f;
-    $this->cnpj = $cnpj_f;
-    $this->sigla = $sigla_f;
+    $this->set_nome_comp($nome_f);
+    $this->set_razao($razao_f);
+    $this->set_codigo($codigo_f);
+    $this->set_cnpj($cnpj_f);
+    $this->set_sigla($sigla_f);
 }
 
 public function valida_sigla_companhia(){
@@ -27,9 +27,9 @@ public function valida_sigla_companhia(){
         return false;
     }
 }
-public function valida_cnpj(){
+public function valida_cnpj($cnpj_f){
 // Deve ser formado por 14 digitos
-    if (ctype_digit($this->cnpj) && strlen($this->cnpj) == 14){
+    if (ctype_digit($cnpj_f) && strlen($cnpj_f) == 14){
         return true;
     }else{
         return false;
@@ -63,15 +63,63 @@ public function get_avioes(){
 }
 
 public function set_nome_comp($nome_f){
-    $this->nome = $nome_f;
+    try{
+        if (ctype_alpha($nome_f)){
+            $this->nome = $nome_f;
+        }else{
+            throw new Exception("Nome inválido");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
 }
 
 public function set_razao($razao_f){
-    $this->razao_social = $razao_f;
+    try{
+        if (ctype_alpha($razao_f)){
+            $this->razao_social = $razao_f;
+        }else{
+            throw new Exception("Razão social inválida");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
 }
 
 public function set_codigo($codigo){
-    $this->codigo = $codigo;
+    try{
+        if (ctype_digit($codigo)){
+            $this->codigo = $codigo;
+        }else{
+            throw new Exception("Código inválido");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
 }
-
-};
+public function set_cnpj($cnpj_f){
+    try{
+        if ($this->valida_cnpj($cnpj_f)){
+            $this->cnpj = $cnpj_f;
+        }else{
+            throw new Exception("CNPJ inválido");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
+}
+public function set_sigla($sigla_f){
+    try{
+        if ($this->valida_sigla_companhia($sigla_f)){
+            $this->sigla = $sigla_f;
+        }else{
+            throw new Exception("Sigla inválida");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
+}
+public function set_avioes($avioes_f){
+    $this->avioes[] = $avioes_f;
+}
+}

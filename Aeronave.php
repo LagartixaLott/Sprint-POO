@@ -13,12 +13,13 @@ protected CompanhiaAerea $CompanhiaAerea_;
 
 
 public function __construct($fabricante_f,$modelo_f,$carga_f,$passageiros_f,$registro_f,$companhiaAerea_f){
-    $this->fabricante = $fabricante_f;
-    $this->modelo = $modelo_f;
-    $this->carga = $carga_f;
-    $this->passageiros = $passageiros_f;
-    $this->registro = $registro_f;
-    $this->CompanhiaAerea_ = $companhiaAerea_f;
+    $this->set_fabricante($fabricante_f);
+    $this->set_modelo($modelo_f);
+    $this->set_carga($carga_f);
+    $this->set_passageiros($passageiros_f);
+    $this->set_registro($registro_f);
+    $this->set_companhia($companhiaAerea_f);
+    $companhiaAerea_f->set_avioes($this);
 }
 
 public function validar_registro($registro_f){
@@ -65,33 +66,91 @@ public function get_companhia_aerea(){
 }
 
 public function set_fabricante($fabricante_f){
-    $this->fabricante = $fabricante_f;
-}
+    try{
+        if (ctype_alpha($fabricante_f)==false){
+            throw new Exception("Fabricante inválido");
+        }
+        else{
+            $this->fabricante = $fabricante_f;
+        }
+    }
+    catch(Exception $e){
+        echo $e->getMessage();
+}}
 
 public function set_modelo($modelo_f){
-    $this->modelo = $modelo_f;
+    //Composto por um prefixo de uma letra
+    //Um hifen
+    //Seguido de um número de 3 dígitos
+    //Modelo (Ex.: A-320
+    try{
+        $prefixo = substr($modelo_f,0,1);
+        $hifen = substr($modelo_f,1,1);
+        $sufixo = substr($modelo_f,2,3);
+        if (ctype_alpha($prefixo)==false || $hifen!='-' || ctype_digit($sufixo)==false){
+            throw new Exception("Modelo inválido");
+        }
+        else{
+            $this->modelo = $modelo_f;
+        }
+    }
+    catch(Exception $e){
+        echo $e->getMessage();
+    }
 }
 
 public function set_carga($carga_f){
-    $this->carga = $carga_f;
+    try{
+        if (is_numeric($carga_f)==false){
+            throw new Exception("Carga inválida");
+        }
+        else{
+            $this->carga = $carga_f;
+        }
+    }
+    catch(Exception $e){
+        echo $e->getMessage();
+    }
 }
 
-public function set_passageiro($passageiro_f){
-    $this->passageiros = $passageiro_f;
-}
+public function set_passageiros($passageiro_f){
+    try{
+        if (is_numeric($passageiro_f)==false){
+            throw new Exception("Passageiro inválido");
+        }
+        else{
+            $this->passageiros = $passageiro_f;
+        }
+    }
+    catch(Exception $e){
+        echo $e->getMessage();
+}}
 
 public function set_registro($registro_f){
-    if (self::validar_registro($registro_f)==true){
-        $this->registro = $registro_f;
-        return;
+    try {
+        if ($this->validar_registro($registro_f)==false){
+            throw new Exception("Registro inválido");
+        }
+        else{
+            $this->registro = $registro_f;
+        }
     }
-    else{
-        echo "Registro inválido";
-        return;
+    catch(Exception $e){
+        echo $e->getMessage();
     }
 }
 
 public function set_companhia(CompanhiaAerea $companhia_aerea_f){
-    $this->CompanhiaAerea_ = $companhia_aerea_f;
+    try {
+        if ($companhia_aerea_f instanceof CompanhiaAerea==false){
+            throw new Exception("Companhia Aérea inválida");
+        }
+        else{
+            $this->CompanhiaAerea_ = $companhia_aerea_f;
+        }
+    }
+    catch(Exception $e){
+        echo $e->getMessage();
+    }
 }
 };

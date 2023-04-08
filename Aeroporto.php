@@ -7,10 +7,10 @@ protected string $estado;
 protected string $nome;
 
 public function __construct(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
-    $this->sigla = $sigla_f;
-    $this->cidade = $cidade_f;
-    $this->estado = $estado_f;
-    $this->nome = $nome_f;
+    $this->set_sigla_aero($sigla_f);
+    $this->set_cidade($cidade_f);
+    $this->set_estado($estado_f);
+    $this->set_nome($nome_f);
 }
 
 public function validar_sigla_aero(string $sigla_s){
@@ -39,19 +39,44 @@ public function get_nome_aero(){
 }
 
 public function set_sigla_aero(string $sigla_f){
-  $this->sigla = $sigla_f;
+  try{
+    if ($this->validar_sigla_aero($sigla_f)){
+      $this->sigla = $sigla_f;
+    }else{
+      throw new Exception("Sigla inválida");
+    }
+  }catch(Exception $e){
+    echo $e->getMessage();
+  }
 }
 
 public function set_cidade(string $cidade_f){
-  $this->cidade = $cidade_f;
+ try{
+    if (ctype_alpha($cidade_f)){
+      $this->cidade = $cidade_f;
+    }else{
+      throw new Exception("Cidade inválida");
+    }
+  }catch(Exception $e){
+    echo $e->getMessage();
+  }
 }
 
 public function set_estado(string $estado_f){
-  $this->estado = $estado_f;
-}
+  try{
+    if (ctype_alpha($estado_f)){
+      $this->estado = $estado_f;
+    }else{
+      throw new Exception("Estado inválido");
+    }
+}}
 
 public function set_nome(string $nome_f){
-  $this->nome = $nome_f;
+  try{
+    if (ctype_alpha($nome_f)){
+      $this->nome = $nome_f;
+    }else{
+      throw new Exception("Nome inválido");
+    }
+}}
 }
-
-};
