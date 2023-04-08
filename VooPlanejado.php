@@ -12,13 +12,6 @@ enum Frequencia{
     case mensal=30; 
 }
 
-class codigo_invalido_voo extends Exception {
-    public function errorMessage_voo() {
-      $errorMsg = 'Erro! O codigo deve ser composto por 2 letras e 4 numeros';
-      return $errorMsg;
-    }
-  }
-
 class VooPlanejado{
 
 protected string $codigo_voo;
@@ -48,7 +41,7 @@ public function validar_codigo($codigo){
     if (ctype_alpha($letras) && ctype_digit($numeros)){
         return $codigo;
     }else{
-        throw new codigo_invalido_voo;
+        throw new Exception('O codigo deve ser composto por 2 letras e 4 numeros');
     }
 }
 public function get_codigo_voo(){
@@ -81,7 +74,7 @@ public function get_aviao_marcado(){
 public function set_codigo_voo(string $codigo_s){
     try {
         self::validar_codigo($codigo_s);
-    } catch(codigo_invalido_voo $c) {
+    } catch(Exception $c) {
         return;
     }
     return $this->codigo_voo=$codigo_s;

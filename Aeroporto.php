@@ -16,10 +16,12 @@ class Aeroporto {
   }
 
   public function validar_sigla_aero(string $sigla_s){
-    if(ctype_alpha($sigla_s) && strlen($sigla_s)==3) return true;
-    else return false;
+    if(ctype_alpha($sigla_s) && strlen($sigla_s)==3) {
+      return $sigla_s;
+    } else {
+      throw new Exception('A sigla deve ser composta por 3 letras');
+    }
   }
-
   public function get_sigla_aero(){
     return $this->sigla;
   }
@@ -37,9 +39,13 @@ class Aeroporto {
   }  
 
   public function set_sigla_aero(string $sigla_f){
-    $this->sigla = $sigla_f;
+    try {
+        self::validar_sigla_aero($sigla_f);
+    } catch (Exception $s) {
+        return $s;
+    }
+    return $this->sigla = $sigla_f;
   }
-
   public function set_cidade(string $cidade_f){
     $this->cidade = $cidade_f;
   }
