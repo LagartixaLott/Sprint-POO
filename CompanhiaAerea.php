@@ -13,7 +13,7 @@ protected string $cnpj;
 protected string $sigla;
 protected $avioes;
 
-public function __construct($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
+public function CompanhiaAerea($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
 $this->nome = $nome_f;
 $this->razao_social = $razao_f;
 $this->codigo = $codigo_f;
