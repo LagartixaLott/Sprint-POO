@@ -8,7 +8,7 @@ class Aeroporto {
   protected string $nome;
 
 
-  public function cadastro_aeroporto(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
+  public function Aeroporto(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
     $this->sigla = $sigla_f;
     $this->cidade = $cidade_f;
     $this->estado = $estado_f;
@@ -16,8 +16,11 @@ class Aeroporto {
   }
 
   public function validar_sigla_aero(string $sigla_s){
-    if(ctype_alpha($sigla_s) && strlen($sigla_s)==3) return true;
-    else return false;
+    if(ctype_alpha($sigla_s) && strlen($sigla_s)==3){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public function get_sigla_aero(){
