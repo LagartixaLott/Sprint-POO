@@ -29,33 +29,53 @@ class VooDecolado extends VooPlanejado{
         return $this->aviao_voo;
     }
     public function set_chegada($chegada_f){
-        if ($chegada_f instanceof DateTime){
-            $this->chegada = $chegada_f;
-        }else{
-            echo "Erro: chegada não é uma data";
+        try {
+            if ($chegada_f instanceof DateTime){
+                $this->chegada = $chegada_f;
+            } else {
+                throw new InvalidArgumentException("Erro: chegada não é uma data");
+            }
+        } catch (InvalidArgumentException $e) {
+            echo $e->getMessage();
         }
     }
+    
     public function set_saida($saida_f){
-        if ($saida_f instanceof DateTime){
-            $this->saida = $saida_f;
-        }else{
-            echo "Erro: chegada não é uma data";
+        try {
+            if ($saida_f instanceof DateTime){
+                $this->saida = $saida_f;
+            } else {
+                throw new InvalidArgumentException("Erro: saida não é uma data");
+            }
+        } catch (InvalidArgumentException $e) {
+            echo $e->getMessage();
         }
     }
+    
     public function set_aviao_voo($aviao_voo_f){
-        if ($aviao_voo_f instanceof Aeronave){
-            $this->aviao_voo = $aviao_voo_f;
-        }else{
-            echo "Erro: chegada não é uma data";
+        try {
+            if ($aviao_voo_f instanceof Aeronave){
+                $this->aviao_voo = $aviao_voo_f;
+            } else {
+                throw new InvalidArgumentException("Erro: a aeronave não existe");
+            }
+        } catch (InvalidArgumentException $e) {
+            echo $e->getMessage();
         }
     }
+    
     public function set_voo_anunciado($voo_anunciado_f){
-        if ($voo_anunciado_f instanceof VooPlanejado){
-            $this->voo_anunciado = $voo_anunciado_f;
-        }else{
-            echo "Erro: chegada não é uma data";
+        try {
+            if ($voo_anunciado_f instanceof VooPlanejado){
+                $this->voo_anunciado = $voo_anunciado_f;
+            } else {
+                throw new InvalidArgumentException("Erro: o voo não existe");
+            }
+        } catch (InvalidArgumentException $e) {
+            echo $e->getMessage();
         }
     }
+    
     public function get_historico_executado(){
         return self::$historico_executado;
     }

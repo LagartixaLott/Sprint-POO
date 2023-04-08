@@ -73,56 +73,83 @@ public function get_aviao_marcado(){
 }
 
 public function set_frequencia($frequencia_voo_f){
-    if ($frequencia_voo_f instanceof Frequencia){
-        $this->Frequencia_voo = $frequencia_voo_f;
-    } else{
-        echo "Frequencia invalida";
+    try{
+        if ($frequencia_voo_f instanceof Frequencia){
+            $this->Frequencia_voo = $frequencia_voo_f;
+        } else{
+            throw new Exception("Frequencia invalida");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
 }
 
 public function set_aviao_esp($Aviao_esperado_f){
-    if ($Aviao_esperado_f instanceof Aeronave){
-        $this->Aviao_esperado = $Aviao_esperado_f;
-    } else{
-        echo "Aeronave invalida";
+    try {
+        if ($Aviao_esperado_f instanceof Aeronave){
+            $this->Aviao_esperado = $Aviao_esperado_f;
+        } else{
+            throw new Exception("Aeronave invalida");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
 }
 
 public function set_hora_cheg_agend($hora_agendada_chegada_f){
-    if ($hora_agendada_chegada_f instanceof DateTime){
-        $this->hora_agendada_chegada = $hora_agendada_chegada_f;
-    } else{
-        echo "Hora invalida";
+    try {
+        if ($hora_agendada_chegada_f instanceof DateTime){
+            $this->hora_agendada_chegada = $hora_agendada_chegada_f;
+        } else{
+            throw new Exception("Hora invalida");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
 }
-
 public function set_hora_said_agend($hora_agendada_saida_f){
-    if ($hora_agendada_saida_f instanceof DateTime){
-        $this->hora_agendada_saida = $hora_agendada_saida_f;
-    } else{
-        echo "Hora invalida";
+    try {
+        if ($hora_agendada_saida_f instanceof DateTime){
+            $this->hora_agendada_saida = $hora_agendada_saida_f;
+        } else{
+            throw new Exception("Hora invalida");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
 }
 
 public function set_origem($Aerop_origem_f){
-    if ($Aerop_origem_f instanceof Aeroporto){
-        $this->Aeroporto_origem = $Aerop_origem_f;
-    } else{
-        echo "Aeroporto de origem invalido";
+    try {
+        if ($Aerop_origem_f instanceof Aeroporto){
+            $this->Aeroporto_origem = $Aerop_origem_f;
+        } else{
+            throw new Exception("Aeroporto de origem invalido");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
 }
 public function set_destino($Aerop_destino_f){
-    if ($Aerop_destino_f instanceof Aeroporto){
-        $this->Aeroporto_destino = $Aerop_destino_f;
-    } else{
-        echo "Aeroporto de destino invalido";
+    try {
+        if ($Aerop_destino_f instanceof Aeroporto){
+            $this->Aeroporto_destino = $Aerop_destino_f;
+        } else{
+            throw new Exception("Aeroporto de destino invalido");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
 }
 public function set_codigo($codigo_f){
-    if ($this->validar_codigo($codigo_f)){
-        $this->codigo = $codigo_f;
-    } else{
-        echo "Codigo invalido";
+    try {
+        if ($this->validar_codigo($codigo_f)){
+            $this->codigo = $codigo_f;
+        } else{
+            throw new Exception("Codigo invalido");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
 }
 public function get_hist_planejado(){
