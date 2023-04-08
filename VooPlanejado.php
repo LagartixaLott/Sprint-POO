@@ -1,15 +1,10 @@
 <?php
 
-include_once("DadosVoos.php");
+#include_once("DadosVoos.php");
 include_once("Aeroporto.php");
 include_once("CompanhiaAerea.php");
 
-enum Frequencia{
-    const DIARIA = 1;
-    const SEMANAL = 2;
-    const QUINZENAL = 3;
-    const MENSAL = 4;
-}
+
 #array para guardar os voos planejado
 
 class VooPlanejado{
@@ -20,9 +15,15 @@ protected Aeroporto $Aeroporto_destino;
 protected DateTime $hora_agendada_chegada;
 protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
-protected frequencia $Frequencia_voo;
+protected string $Frequencia_voo;
 public static array $historico_planejado = [];    
 
+public static $dict_frequencias = [
+    '1' => 'Diário',
+    '2' => 'Semanal',
+    '3' => 'Quinzenal',
+    '4' => 'Mensal',
+];
 public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
     $this-> set_codigo($codigo_f);
     $this-> set_origem($Aerop_origem_f);
@@ -74,10 +75,10 @@ public function get_aviao_marcado(){
 
 public function set_frequencia($frequencia_voo_f){
     try{
-        if ($frequencia_voo_f instanceof Frequencia){
-            $this->Frequencia_voo = $frequencia_voo_f;
-        } else{
-            throw new Exception("Frequencia invalida");
+        if (isset(self::$dict_frequencias[$frequencia_voo_f])) {
+            $this->Frequencia_voo = self::$dict_frequencias[$frequencia_voo_f];
+        } else {
+            throw new Exception("Código de frequência inválido.");
         }
     }catch(Exception $e){
         echo $e->getMessage();
@@ -152,7 +153,12 @@ public function set_codigo($codigo_f){
         echo $e->getMessage();
     }
 }
-public function get_hist_planejado(){
-    return self::$historico_planejado;
+public static function get_hist_planejado(){
+    //deve retornar uma string com todos os voos planejados
+    $string = "";
+    foreach (self::$historico_planejado as $voo){
+        $string .= "Voo " . $voo->get_codigo() . " da " . $voo->get_aviao_marcado()->get_companhia_aerea()->get_nome() . " de " . $voo->get_origem()->get_sigla_aero() . " para " . $voo->get_destino()->get_sigla_aero() . " marcado para " . $voo->get_hora_agenda_saida()->format('d/m/Y H:i') . " com chegada " . $voo->get_hora_agenda_chegada()->format('d/m/Y H:i') . "\n";
+    }
+    return $string;
 }
 }
