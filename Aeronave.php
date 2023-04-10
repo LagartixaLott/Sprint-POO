@@ -2,6 +2,12 @@
 
 include_once("CompanhiaAerea.php");
 
+class Excecao_Resgistro_aviao{
+ public  string $registro_erro="Erro no registro";
+
+ } 
+
+
 class Aeronave{
 
 protected string $fabricante;
