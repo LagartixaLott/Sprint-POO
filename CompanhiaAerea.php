@@ -2,6 +2,7 @@
 
 include_once("Aeronave.php");
 
+
 class CompanhiaAerea{
 
 protected string $nome;
@@ -49,7 +50,6 @@ public function get_razao(){
 public function get_codigo(){
     return $this->codigo;
 }
-
 public function get_cnpj(){
     return $this->cnpj;
 }
