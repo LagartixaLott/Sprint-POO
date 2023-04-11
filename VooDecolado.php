@@ -2,7 +2,7 @@
 include_once("Aeronave.php");
 include_once("VooPlanejado.php");
 
-class VooDecolado extends VooPlanejado{
+class Viagem extends VooPlanejado{
     protected Aeronave $aviao_voo;
     protected DateTime $chegada;
     protected DateTime $saida;
