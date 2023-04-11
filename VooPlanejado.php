@@ -72,6 +72,12 @@ public function get_codigo(){
 public function get_aviao_marcado(){
     return $this->Aviao_esperado;
 }
+public function get_assento(){
+    return $this->Aviao_esperado->assento;
+}
+public function get_tarifa(){
+    return $this->Aviao_esperado->assento;
+}
 
 public function set_frequencia($frequencia_voo_f){
     try{
