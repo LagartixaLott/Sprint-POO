@@ -21,6 +21,7 @@ protected DateTime $hora_agendada_chegada;
 protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
 protected frequencia $Frequencia_voo;
+protected float $tarifa;
 public static array $historico_planejado = [];    
 
 public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
