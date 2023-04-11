@@ -1,8 +1,5 @@
 <?php
 
-include_once("Passagens.php");
-include_once("Viagem.php");
-
 class Passageiro{
    protected $nome_passageiro;
     protected $sobrenome_passageiro;
@@ -26,6 +23,14 @@ public function set_sobrenome_passageiro($sobrenome_p){
 public function set_documento_passageiro($documento_p){
     $this->documento_passageiro = $documento_p;
 }
-
+public function get_nome_passageiro(){
+    return $this->nome_passageiro;
+}
+public function get_sobrenome_passageiro(){
+    return $this->sobrenome_passageiro;
+}
+public function get_documento_passageiro(){
+    return $this->documento_passageiro;
+}
 }
     
