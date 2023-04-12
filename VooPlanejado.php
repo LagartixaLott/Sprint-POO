@@ -25,19 +25,23 @@ public static $dict_frequencias = [
     '4' => 'Mensal',
 ];
 public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
+    $this->set_aviao_esp($Aviao_esperado_f);
     $this-> set_codigo($codigo_f);
     $this-> set_origem($Aerop_origem_f);
     $this->set_destino($Aerop_destino_f);
     $this->set_hora_cheg_agend($Hora_agen_chegada_f);
     $this->set_hora_said_agend($Hora_agen_saida_f);
-    $this->set_aviao_esp($Aviao_esperado_f);
     $this->set_frequencia($frequencia_voo_f);
     self::$historico_planejado[] = $this;
 }
 
-public function validar_codigo($codigo){
+public function validar_codigo($codigo, $Aviao_esperado_f){
 //Codigo composto por 2 letras e 4 numeros
     $letras = substr($codigo,0,2);
+    $sigla_comp_aerea = $Aviao_esperado_f-> get_companhia_aerea() -> get_sigla();
+    if ($letras != $sigla_comp_aerea){
+        return false;
+    }
     $numeros = substr($codigo,2,4);
     if (ctype_alpha($letras) && ctype_digit($numeros)){
         return true;
@@ -150,7 +154,7 @@ public function set_destino($Aerop_destino_f){
 }
 public function set_codigo($codigo_f){
     try {
-        if ($this->validar_codigo($codigo_f)){
+        if ($this->validar_codigo($codigo_f, $this->get_aviao_marcado())){
             $this->codigo = $codigo_f;
         } else{
             throw new Exception("Codigo invalido");
