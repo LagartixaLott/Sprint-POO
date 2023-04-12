@@ -40,6 +40,7 @@ public function validar_codigo($codigo, $Aviao_esperado_f){
     $letras = substr($codigo,0,2);
     $sigla_comp_aerea = $Aviao_esperado_f-> get_companhia_aerea() -> get_sigla();
     if ($letras != $sigla_comp_aerea){
+        echo "Erro: Codigo do voo não corresponde a companhia aerea";
         return false;
     }
     $numeros = substr($codigo,2,4);
@@ -76,12 +77,12 @@ public function get_codigo(){
 public function get_aviao_marcado(){
     return $this->Aviao_esperado;
 }
-public function get_assento(){
-    return $this->Aviao_esperado->assento;
-}
-public function get_tarifa(){
-    return $this->Aviao_esperado->assento;
-}
+// public function get_assento(){
+//     return $this->Aviao_esperado->assento;
+// }
+// public function get_tarifa(){
+//     return $this->Aviao_esperado->assento;
+// }
 
 public function set_frequencia($frequencia_voo_f){
     try{
