@@ -44,7 +44,8 @@ public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_age
     self::$historico_planejado[] = $this;
 }
 
-public function validar_codigo($codigo, $Aviao_esperado_f){
+public function validar_codigo($codigo, $Aviao_esperado_f): bool
+{
 //Codigo composto por 2 letras e 4 numeros
     $letras = substr($codigo,0,2);
     $sigla_comp_aerea = $Aviao_esperado_f-> get_companhia_aerea() -> get_sigla();
@@ -60,30 +61,37 @@ public function validar_codigo($codigo, $Aviao_esperado_f){
     }
 }
 
-public function get_frequencia_voo(){
+public function get_frequencia_voo(): array
+{
     return $this->Frequencia_voo;
 }
 
-public function get_origem(){
+public function get_origem(): Aeroporto
+{
     return $this->Aeroporto_origem;
 }
 
-public function get_destino(){
+public function get_destino(): Aeroporto
+{
     return $this->Aeroporto_destino;
 }
 
-public function get_hora_agenda_chegada(){
+public function get_hora_agenda_chegada(): DateTime
+{
     return $this->hora_agendada_chegada;
 }
 
-public function get_hora_agenda_saida(){
+public function get_hora_agenda_saida(): DateTime
+{
     return $this->hora_agendada_saida;
 }
 
-public function get_codigo(){
+public function get_codigo(): string
+{
     return $this->codigo;
 }
-public function get_aviao_marcado(){
+public function get_aviao_marcado(): Aeronave
+{
     return $this->Aviao_esperado;
 }
 // public function get_assento(){
@@ -93,12 +101,13 @@ public function get_aviao_marcado(){
 //     return $this->Aviao_esperado->assento;
 // }
 
-public function set_frequencia($frequencia_voo_f, $dia_f){
+public function set_frequencia($frequencia_voo_f, $dia_f): void
+{
     $dia = '';
     $frequencia = '';
     try{
         if (isset(self::$dict_frequencias[$frequencia_voo_f])) {
-            $frequencia_voo_f = self::$dict_frequencias[$frequencia_voo_f];
+            $frequencia = self::$dict_frequencias[$frequencia_voo_f];
         } else {
             throw new Exception("Código de frequência inválido.");
         }
@@ -110,10 +119,11 @@ public function set_frequencia($frequencia_voo_f, $dia_f){
     }catch(Exception $e){
         echo $e->getMessage();
     }
-    $this->Frequencia_voo = [$dia_f, $frequencia_voo_f];
+    $this->Frequencia_voo = [$dia, $frequencia];
 }
 
-public function set_aviao_esp($Aviao_esperado_f){
+public function set_aviao_esp($Aviao_esperado_f): void
+{
     try {
         if ($Aviao_esperado_f instanceof Aeronave){
             $this->Aviao_esperado = $Aviao_esperado_f;
@@ -125,7 +135,8 @@ public function set_aviao_esp($Aviao_esperado_f){
     }
 }
 
-public function set_hora_cheg_agend($hora_agendada_chegada_f){
+public function set_hora_cheg_agend($hora_agendada_chegada_f): void
+{
     try {
         if ($hora_agendada_chegada_f instanceof DateTime){
             $this->hora_agendada_chegada = $hora_agendada_chegada_f;
@@ -136,7 +147,8 @@ public function set_hora_cheg_agend($hora_agendada_chegada_f){
         echo $e->getMessage();
     }
 }
-public function set_hora_said_agend($hora_agendada_saida_f){
+public function set_hora_said_agend($hora_agendada_saida_f): void
+{
     try {
         if ($hora_agendada_saida_f instanceof DateTime){
             $this->hora_agendada_saida = $hora_agendada_saida_f;
@@ -148,7 +160,8 @@ public function set_hora_said_agend($hora_agendada_saida_f){
     }
 }
 
-public function set_origem($Aerop_origem_f){
+public function set_origem($Aerop_origem_f): void
+{
     try {
         if ($Aerop_origem_f instanceof Aeroporto){
             $this->Aeroporto_origem = $Aerop_origem_f;
@@ -159,7 +172,8 @@ public function set_origem($Aerop_origem_f){
         echo $e->getMessage();
     }
 }
-public function set_destino($Aerop_destino_f){
+public function set_destino($Aerop_destino_f): void
+{
     try {
         if ($Aerop_destino_f instanceof Aeroporto){
             $this->Aeroporto_destino = $Aerop_destino_f;
@@ -170,7 +184,8 @@ public function set_destino($Aerop_destino_f){
         echo $e->getMessage();
     }
 }
-public function set_codigo($codigo_f){
+public function set_codigo($codigo_f): void
+{
     try {
         if ($this->validar_codigo($codigo_f, $this->get_aviao_marcado())){
             $this->codigo = $codigo_f;
@@ -181,7 +196,8 @@ public function set_codigo($codigo_f){
         echo $e->getMessage();
     }
 }
-public static function get_hist_planejado(){
+public static function get_hist_planejado(): string
+{
     //deve retornar uma string com todos os voos planejados
     $string = "";
     foreach (self::$historico_planejado as $voo){
