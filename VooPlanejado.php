@@ -15,7 +15,7 @@ protected Aeroporto $Aeroporto_destino;
 protected DateTime $hora_agendada_chegada;
 protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
-protected array $Frequencia_voo = [string, string];
+protected array $Frequencia_voo = ['dia', 'frequencia'];
 public static array $historico_planejado = [];    
 
 public static $dict_frequencias = [
@@ -189,4 +189,18 @@ public static function get_hist_planejado(){
     }
     return $string;
 }
+public static function buscar_proximos_voos(): array
+    {
+        $agora = new DateTime();
+        $data_limite = $agora->modify('+30 days');
+
+        $voos_proximos = [];
+        foreach (self::$historico_planejado as $voo) {
+            if ($voo->hora_agendada_saida <= $data_limite) {
+                $voos_proximos[] = $voo;
+            }
+        }
+
+        return $voos_proximos;
+    }
 }
