@@ -15,7 +15,7 @@ protected Aeroporto $Aeroporto_destino;
 protected DateTime $hora_agendada_chegada;
 protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
-protected string $Frequencia_voo;
+protected array $Frequencia_voo = [string, string];
 public static array $historico_planejado = [];    
 
 public static $dict_frequencias = [
@@ -24,14 +24,23 @@ public static $dict_frequencias = [
     '3' => 'Quinzenal',
     '4' => 'Mensal',
 ];
-public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
+public static $dict_dias = [
+    '1' => 'Domingo',
+    '2' =>'Segunda',
+    '3' => 'Terça',
+    '4' => 'Quarta',
+    '5' =>'Quinta',
+    '6' => 'Sexta',  
+    '7' => 'Sábado',
+];
+public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f, $dia_f,$frequencia_voo_f){
     $this->set_aviao_esp($Aviao_esperado_f);
-    $this-> set_codigo($codigo_f);
-    $this-> set_origem($Aerop_origem_f);
+    $this->set_codigo($codigo_f);
+    $this->set_origem($Aerop_origem_f);
     $this->set_destino($Aerop_destino_f);
     $this->set_hora_cheg_agend($Hora_agen_chegada_f);
     $this->set_hora_said_agend($Hora_agen_saida_f);
-    $this->set_frequencia($frequencia_voo_f);
+    $this->set_frequencia($frequencia_voo_f, $dia_f);
     self::$historico_planejado[] = $this;
 }
 
@@ -84,16 +93,24 @@ public function get_aviao_marcado(){
 //     return $this->Aviao_esperado->assento;
 // }
 
-public function set_frequencia($frequencia_voo_f){
+public function set_frequencia($frequencia_voo_f, $dia_f){
+    $dia = '';
+    $frequencia = '';
     try{
         if (isset(self::$dict_frequencias[$frequencia_voo_f])) {
-            $this->Frequencia_voo = self::$dict_frequencias[$frequencia_voo_f];
+            $frequencia_voo_f = self::$dict_frequencias[$frequencia_voo_f];
         } else {
             throw new Exception("Código de frequência inválido.");
+        }
+        if (isset(self::$dict_dias[$dia_f])) {
+            $dia = self::$dict_dias[$dia_f];
+        } else {
+            throw new Exception("Código de dia inválido.");
         }
     }catch(Exception $e){
         echo $e->getMessage();
     }
+    $this->Frequencia_voo = [$dia_f, $frequencia_voo_f];
 }
 
 public function set_aviao_esp($Aviao_esperado_f){
