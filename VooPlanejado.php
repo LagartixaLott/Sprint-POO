@@ -21,9 +21,10 @@ protected DateTime $hora_agendada_chegada;
 protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
 protected frequencia $Frequencia_voo;
+protected float $preco;
 public static array $historico_planejado = [];    
 
-public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
+public function __constructVooPlanejado($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f,$preco_f){
     $this-> set_codigo($codigo_f);
     $this-> set_origem($Aerop_origem_f);
     $this->set_destino($Aerop_destino_f);
@@ -31,6 +32,7 @@ public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_age
     $this->set_hora_said_agend($Hora_agen_saida_f);
     $this->set_aviao_esp($Aviao_esperado_f);
     $this->set_frequencia($frequencia_voo_f);
+    $this->set_preco($preco_f);
     self::$historico_planejado[] = $this;
 }
 
@@ -70,6 +72,9 @@ public function get_codigo(){
 }
 public function get_aviao_marcado(){
     return $this->Aviao_esperado;
+}
+public function get_preco(){
+    return $this->preco;
 }
 
 public function set_frequencia($frequencia_voo_f){
@@ -151,6 +156,9 @@ public function set_codigo($codigo_f){
     }catch(Exception $e){
         echo $e->getMessage();
     }
+}
+public function set_preco($preco_f){
+    $this->preco = $preco_f;
 }
 public function get_hist_planejado(){
     return self::$historico_planejado;

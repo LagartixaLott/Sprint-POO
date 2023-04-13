@@ -36,7 +36,7 @@ public function get_sobrenome_passageiro(){
 public function get_documento_passageiro(){
     return $this->documento_passageiro;
 }
-public function get_numero_bagagens(){
+public function get_nbagagens(){
     return $this->numero_bagagens;
 }
 }
