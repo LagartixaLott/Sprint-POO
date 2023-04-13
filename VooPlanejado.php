@@ -203,4 +203,13 @@ public static function buscar_proximos_voos(): array
 
         return $voos_proximos;
     }
+public static function proximos_voos_string(): string
+    {
+        $voos_proximos = self::buscar_proximos_voos();
+        $string = "";
+        foreach ($voos_proximos as $voo) {
+            $string .= "Voo " . $voo->get_codigo() . " da " . $voo->get_aviao_marcado()->get_companhia_aerea()->get_nome() . " de " . $voo->get_origem()->get_sigla_aero() . " para " . $voo->get_destino()->get_sigla_aero() . " marcado para " . $voo->get_hora_agenda_saida()->format('d/m/Y H:i') . " com chegada " . $voo->get_hora_agenda_chegada()->format('d/m/Y H:i') . "\n";
+        }
+        return $string;
+    }
 }
