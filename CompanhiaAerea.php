@@ -11,13 +11,15 @@ protected string $codigo;
 protected string $cnpj;
 protected string $sigla;
 protected array $avioes;
+protected string $preco_bagagem;
 
-public function __construct($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f){
+public function __construct($nome_f,$razao_f,$codigo_f,$cnpj_f,$sigla_f,$preco_bagagem_f){
     $this->set_nome_comp($nome_f);
     $this->set_razao($razao_f);
     $this->set_codigo($codigo_f);
     $this->set_cnpj($cnpj_f);
     $this->set_sigla($sigla_f);
+    $this->set_preco_bagagem($preco_bagagem_f);
 }
 
 public function valida_sigla_companhia($sigla_f){
@@ -122,4 +124,8 @@ public function set_sigla($sigla_f){
 public function set_avioes($avioes_f){
     $this->avioes[] = $avioes_f;
 }
+public function set_preco_bagagem($preco_bagagem_f){
+    $this->preco_bagagem = $preco_bagagem_f;
+}
+
 }
