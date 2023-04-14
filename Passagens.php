@@ -14,11 +14,11 @@ class Passagens{
 public function __constructPassagens($voo_f,$passageiro_f,$origem_f,$destino_f,$assento_f,$franquia_f,$tarifa_f, $preco_f){
     $this->set_voo($origem_f, $destino_f);
     $this->set_cliente($passageiro_f);
-    $this->set_preco($preco_f);
+    $this->set_preco();
     self::$passagens[] = $this;
 }
-public function set_preco($preco_f){
-    $this->preco = $preco_f;
+public function get_preco(){
+    return $this->preco;
 }
 public function get_voo(){
     return $this->voo;
@@ -33,7 +33,7 @@ public function get_destino(){
     return $this->voo->get_destino();
 }
 public function get_assento(){
-    return $this->voo->get_assento();
+    return $this->voo->VooPlanejado::get_assento();
 }
 public function get_franquia(){
     return $this->voo->get_franquia();
@@ -44,9 +44,15 @@ public function get_tarifa(){
 public function get_nbagagens(){
     return $this->passageiro->get_nbagagens();
 }
-public function get_preco(){
-    return $this->preco;
+public function set_preco(){
+    if ($this->conexao != null){
+        $this->preco = $this->voo->get_preco();
+    }
+    else{
+        $this->preco = $this->voo->get_preco() + $this->conexao->get_preco();
+    }
 }
+
 public function comprar_bagagem(){
     $nbagagens = $this->get_nbagagens();
     $tarifa = $this->get_tarifa();
@@ -54,13 +60,9 @@ public function comprar_bagagem(){
 }
 public function set_voo($origem_f, $destino_f){
     $voos = self::verificar_conexão($origem_f, $destino_f);
-
     if (sizeof($voos) == 1){
         $this->voo = $voos[0];
-        $this->conexao = null;
-    $this->voo = $voos[0];
-    $tamanho = sizeof($voos);
-    if ($tamanho == 2){
+    if (sizeof($voos) == 2){
         $this->voo = $voos[0];
         $this->conexao = $voos[1];
     }

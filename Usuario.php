@@ -9,6 +9,7 @@ class Usuario{
     protected string $documento_usuario;
     protected array $passagens;
 
+
     public function __construct($nome_u,$sobrenome_u,$documento_u){
         $this->set_nome_usuario($nome_u);
         $this->set_sobrenome_usuario($sobrenome_u);
