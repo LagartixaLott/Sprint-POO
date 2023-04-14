@@ -1,54 +1,82 @@
 <?php
 
 class Aeroporto {
-private{
-string $sigla;
-string $cidade;
-string $estado;
-string $nome;
-}
-cadastro_aeroporto(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
+protected string $sigla;
+protected string $cidade;
+protected string $estado;
+protected string $nome;
 
-  //  
-}
-
-validar_sigla_aero(string $sigla_s){
-    //
+public function __construct(string $sigla_f,string $cidade_f,string $estado_f,string $nome_f){
+    $this->set_sigla_aero($sigla_f);
+    $this->set_cidade($cidade_f);
+    $this->set_estado($estado_f);
+    $this->set_nome($nome_f);
 }
 
-get_sigla_aero(){
-
+public function validar_sigla_aero(string $sigla_s){
+//A sigla deve ser formada por duas letras
+    if (ctype_alpha($sigla_s) && strlen($sigla_s) == 2){
+        return true;
+    }else{
+        return false;
+    }
 }
 
-get_cidade(){
-
+public function get_sigla_aero(){
+  return $this->sigla;
 }
 
-get_estado(){
-
-
+public function get_cidade(){
+  return $this->cidade;
 }
 
-get_nome_aero(){
-
+public function get_estado(){
+  return $this->estado;
 }
 
-set_sigla_aero(string $sigla_f){
-
+public function get_nome_aero(){
+  return $this->nome;
 }
 
-set_cidade(string $cidade_f){
-
-
+public function set_sigla_aero(string $sigla_f){
+  try{
+    if ($this->validar_sigla_aero($sigla_f)){
+      $this->sigla = $sigla_f;
+    }else{
+      throw new Exception("Sigla inválida");
+    }
+  }catch(Exception $e){
+    echo $e->getMessage();
+  }
 }
 
-set_estado(string $estado_f){
-
-
+public function set_cidade(string $cidade_f){
+ try{
+    if (ctype_alpha($cidade_f)){
+      $this->cidade = $cidade_f;
+    }else{
+      throw new Exception("Cidade inválida");
+    }
+  }catch(Exception $e){
+    echo $e->getMessage();
+  }
 }
 
-set_nome(string $nome_f)
+public function set_estado(string $estado_f){
+  try{
+    if (ctype_alpha($estado_f)){
+      $this->estado = $estado_f;
+    }else{
+      throw new Exception("Estado inválido");
+    }
+}}
 
-
-
-};
+public function set_nome(string $nome_f){
+  try{
+    if (ctype_alpha($nome_f)){
+      $this->nome = $nome_f;
+    }else{
+      throw new Exception("Nome inválido");
+    }
+}}
+}
