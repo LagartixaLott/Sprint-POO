@@ -15,8 +15,7 @@ protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
 protected string $Frequencia_voo;
 public static array $historico_planejado = [];  
-
-protected Assento $assento;
+public array $assentos = [];
 
 public static $dict_frequencias = [
     '1' => 'Diário',
@@ -24,7 +23,7 @@ public static $dict_frequencias = [
     '3' => 'Quinzenal',
     '4' => 'Mensal',
 ];
-public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f){
+public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f, $array_de_assentos_f){
     $this-> set_codigo($codigo_f);
     $this-> set_origem($Aerop_origem_f);
     $this->set_destino($Aerop_destino_f);
@@ -33,6 +32,7 @@ public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_age
     $this->set_aviao_esp($Aviao_esperado_f);
     $this->set_frequencia($frequencia_voo_f);
     self::$historico_planejado[] = $this;
+    $this->set_assentos($array_de_assentos_f);
 }
 
 public function validar_codigo($codigo){
@@ -162,22 +162,37 @@ public static function get_hist_planejado(){
     return $string;
 }
 
-public function verifica_assento($fileira_f, $numero_assento_f, Passageiro $passageiro_f){
+
+public function set_assentos($array_de_assentos_f) {
     try {
-        if ($this->assento->get_fileira() == $fileira_f) {
-            if ($this->assento->get_assento() == $numero_assento_f) {
-                if($this->assento->disponibilidade == true) {
-                    set_passageiro_assento($passageiro_f)
-                    $this->assento->disponibilidade = false;
+        if (is_array($array_de_assentos_f)) {
+            $this->assentos = $array_de_assentos_f;
+        } else {
+            throw new Exception("Array de assentos inválido.");
+        }
+    } catch(Exception $e) {
+        echo $e->getMessage();
+    }
+
+}
+public function verifica_assento($fileira_f, $numero_assento_f, Passageiro $passageiro_f) {
+    try {
+        foreach ($assentos as $assento_percorrido) {
+            if($assento_percorrido->get_fileira() == $fileira_f) {
+                if($assento_percorrido->get_numero_assento() ==  $numero_assento_f) {
+                    if($assento_percorrido->disponibilidade ==  true) {
+                        $assento_percorrido->set_passageiro_assento($passageiro_f);
+                        $assento_percorrido->disponibilidade = false;
+                    }
+                    else {
+                        throw new Exception("Assento indisponível");
+                    }
                 }
             }
-        } else{
-            throw new Exception("Assento indisponível");
         }
-    }catch(Exception $e){
+    } catch(Exception $e) {
         echo $e->getMessage();
     }
 }
-
 
 }
