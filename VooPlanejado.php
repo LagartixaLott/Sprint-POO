@@ -1,6 +1,6 @@
 <?php
 
-include_once("DadosVoos.php");
+#include_once("DadosVoos.php");
 include_once("Aeroporto.php");
 include_once("CompanhiaAerea.php");
 
@@ -11,6 +11,7 @@ enum Frequencia{
     const MENSAL = 4;
 }
 #array para guardar os voos planejado
+#array para guardar os voos planejado
 
 class VooPlanejado{
 
@@ -20,7 +21,7 @@ protected Aeroporto $Aeroporto_destino;
 protected DateTime $hora_agendada_chegada;
 protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
-protected frequencia $Frequencia_voo;
+protected Frequencia $Frequencia_voo;
 protected float $preco;
 public static array $historico_planejado = [];    
 
@@ -79,10 +80,10 @@ public function get_preco(){
 
 public function set_frequencia($frequencia_voo_f){
     try{
-        if ($frequencia_voo_f instanceof Frequencia){
-            $this->Frequencia_voo = $frequencia_voo_f;
-        } else{
-            throw new Exception("Frequencia invalida");
+        if (isset(self::$dict_frequencias[$frequencia_voo_f])) {
+            $this->Frequencia_voo = self::$dict_frequencias[$frequencia_voo_f];
+        } else {
+            throw new Exception("Código de frequência inválido.");
         }
     }catch(Exception $e){
         echo $e->getMessage();
@@ -160,7 +161,12 @@ public function set_codigo($codigo_f){
 public function set_preco($preco_f){
     $this->preco = $preco_f;
 }
-public function get_hist_planejado(){
-    return self::$historico_planejado;
+public static function get_hist_planejado(){
+    //deve retornar uma string com todos os voos planejados
+    $string = "";
+    foreach (self::$historico_planejado as $voo){
+        $string .= "Voo " . $voo->get_codigo() . " da " . $voo->get_aviao_marcado()->get_companhia_aerea()->get_nome() . " de " . $voo->get_origem()->get_sigla_aero() . " para " . $voo->get_destino()->get_sigla_aero() . " marcado para " . $voo->get_hora_agenda_saida()->format('d/m/Y H:i') . " com chegada " . $voo->get_hora_agenda_chegada()->format('d/m/Y H:i') . "\n";
+    }
+    return $string;
 }
 }
