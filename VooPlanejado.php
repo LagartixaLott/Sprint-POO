@@ -25,7 +25,7 @@ protected Frequencia $Frequencia_voo;
 protected float $preco;
 public static array $historico_planejado = [];    
 
-public function __constructVooPlanejado($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f,$preco_f){
+public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f,$preco_f){
     $this-> set_codigo($codigo_f);
     $this-> set_origem($Aerop_origem_f);
     $this->set_destino($Aerop_destino_f);

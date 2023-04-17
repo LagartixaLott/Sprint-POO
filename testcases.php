@@ -10,7 +10,7 @@ $chegada = new DateTime("2022-10-11 18:45:32");
 $novasaida = new DateTime("2022-10-11 18:35:32");
 $novachegada = new DateTime("2022-10-11 20:35:32");
 //Test Cases para a classe CompanhiaAerea
-$companhia = new CompanhiaAerea("Gol", "Gol Linhas Aereas", "123", "15.488.222/0001-72", "GL");
+$companhia = new CompanhiaAerea("Gol", "Gol Linhas Aereas", "123", "15.488.222/0001-72", "GL", 30);
 echo  $companhia->get_razao()."\n";
 //Test Cases para a classe Aeronave
 $aeronave = new Aeronave("Boeing", "A-800", 186, 23600, "PR-GUO", $companhia);
@@ -23,7 +23,7 @@ $teresina = new Aeroporto("THE", "Teresina", "PI", "Aeroporto de Teresina");
 echo $congonhas->get_nome_aero()."\n";
 
 //Test Cases para a classe VooPlanejado
-$voo_planejado = new VooPlanejado("GL1234", $congonhas, $teresina, $chegada, $saida, $aeronave, '2');
+$voo_planejado = new VooPlanejado("GL1234", $congonhas, $teresina, $chegada, $saida, $aeronave, '2', 30);
 echo $voo_planejado->get_frequencia_voo()."\n";
 
 //Test Cases para a classe VooDecolado
