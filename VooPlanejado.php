@@ -36,6 +36,20 @@ public static $dict_dias = [
     '6' => 'Sexta',  
     '7' => 'Sábado',
 ];
+public static $dict_assentos = [
+    'A' => 1,
+    'B' => 2,
+    'C' => 3,   
+    'D' => 4,
+    'E' => 5,
+    'F' => 6,
+    1 => 'A',
+    2 => 'B',
+    3 => 'C',
+    4 => 'D',
+    5 => 'E',
+    6 => 'F',
+];
 public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f, $dia_f,$frequencia_voo_f, $franquia_f, $preco_f){
     $this->set_aviao_esp($Aviao_esperado_f);
     $this->set_codigo($codigo_f);
@@ -44,7 +58,9 @@ public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_age
     $this->set_hora_cheg_agend($Hora_agen_chegada_f);
     $this->set_hora_said_agend($Hora_agen_saida_f);
     $this->set_frequencia($frequencia_voo_f, $dia_f);
+    $this->set_franquia($franquia_f);
     $this->set_preco($preco_f);
+    self::inicializar_assento();
     self::$historico_planejado[] = $this;
 }
 
@@ -109,27 +125,78 @@ public function get_aviao_marcado(): Aeronave
 {
     return $this->Aviao_esperado;
 }
-// public function get_assento(){
-//     return $this->Aviao_esperado->assento;
-// }
-// public function get_tarifa(){
-//     return $this->Aviao_esperado->assento;
-// }
 public function set_preco($preco_f){
     $this->preco = $preco_f;
 }
-public function set_assento(){
-    //numero de assentos é definido pelo aviao
-    $this->assentos[] = $this->Aviao_esperado->get_passageiro();
+public function set_franquia($franquia_f){
+    $this->franquia = $franquia_f;
 }
-public function comprar_assento($assento){
-    //verificar se o assento está disponivel
-    if ($this->assentos[$assento] == null){
-        $this->assentos[$assento] = true;
-    }else{
-        echo "Assento indisponivel";
+public function inicializar_assento(){    
+    //numero de assentos é definido pelo aviao
+    $numero_de_assentos = $this->Aviao_esperado->get_passageiro();
+    $fileiras = floor($numero_de_assentos/6);
+    $resto = $numero_de_assentos%6;
+    //criar array bidimensional onde o numero de assentos é a primeira dimensão e a segunda dimensão é o dict de assentos
+    for ($i=1; $i < $fileiras+1; $i++) { 
+        for ($j=1; $j < 7; $j++) { 
+            $coluna = self::$dict_assentos[$j];
+            $identificação_fileira = "{$i}{$coluna}";
+            $this->assentos[$i][$j] = [$identificação_fileira,null, true];
+        }
+    }
+    if ($resto != 0){
+        for ($i=0; $i < $resto; $i++) { 
+            $this->assentos[$fileiras+1][$i] = [null, true];
+        }
     }
 }
+public function comprar_assento(string $assento, Passageiro $passageiro){
+    //verificar se o assento existe
+    try {
+        preg_match_all('/\d+|\D+/', $assento, $matches);
+        $digitos = "{$matches[0][0]}";
+        $letras = "{$matches[0][1]}";
+        if (ctype_alpha($letras)){
+            if (ctype_digit($digitos) && $digitos < 101){
+                if ($digitos > $this->assentos){
+                    throw new Exception("A fileira deve ser um numero inteiro.");
+                }
+            }else{
+                throw new Exception("A coluna deve ser escrita como A, B, C, D, E, ou F \n.");
+            }
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+    $coluna = self::$dict_assentos[$letras];
+    $fileira = $digitos;
+    //verificar se o assento está disponivel
+    try{
+        if ($this->assentos[$fileira][$coluna][1] == null && $this->assentos[$fileira][$coluna][2] = true){
+            $this->assentos[$fileira][$coluna][1] = $passageiro;
+            $this->assentos[$fileira][$coluna][2] = false;
+        }else{
+            throw new Exception("Assento indisponivel.");
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
+}
+public function get_assentos(){
+    return $this->assentos;
+}
+public function get_assentos_ocupados() {
+    $ocupados = "";
+    foreach ($this->assentos as $fileira) {
+        foreach ($fileira as $assento) {
+            if (!$assento[2]) { // verifica se o assento está ocupado
+                $ocupados .= $assento[1]->get_nome_passageiro()." ".$assento[1]->get_sobrenome_passageiro()." está sentado/a no assento {$assento[0]}";
+            }
+        }
+    }
+    return $ocupados;
+}
+
 public function set_frequencia($frequencia_voo_f, $dia_f): void
 {
     $dia = '';

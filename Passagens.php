@@ -1,18 +1,19 @@
 <?php
 
 include_once "VooPlanejado.php";
+include_once "Aeroporto.php";
 include_once "Passageiro.php";
 include_once "Aeronave.php";
 class Passagens{
     protected VooPlanejado $voo;
-    protected VooPlanejado $conexao;
+    protected ?VooPlanejado $conexao = null;
     protected Passageiro $passageiro;
     public static array $passagens = []; 
     protected float $preco;
 
     #protected VooPlanejado $conexao;
 
-public function __construct($voo_f,$passageiro_f,$origem_f,$destino_f,$assento_f,$franquia_f,$tarifa_f, $preco_f){
+public function __construct(Aeroporto $origem_f, Aeroporto $destino_f, Passageiro $passageiro_f){
     $this->set_voo($origem_f, $destino_f);
     $this->set_cliente($passageiro_f);
     $this->set_preco();
@@ -33,20 +34,17 @@ public function get_origem(){
 public function get_destino(){
     return $this->voo->get_destino();
 }
-public function get_assento(){
-    return $this->voo->get_assento();
-}
 public function get_franquia(){
     return $this->voo->get_franquia();
 }
 public function get_tarifa(){
-    return $this->voo->Aviao_esperado->get_tarifa();
+    return $this->voo->get_aviao_marcado()->get_tarifa();
 }
 public function get_nbagagens(){
     return $this->passageiro->get_nbagagens();
 }
 public function set_preco(){
-    if ($this->conexao != null){
+    if ($this->conexao == null){
         $this->preco = $this->voo->get_preco();
     }
     else{
@@ -60,15 +58,14 @@ public function comprar_bagagem(){
     return $nbagagens*$tarifa;
 }
 public function set_voo($origem_f, $destino_f){
+    echo "\n Verificando conexão";
     $voos = self::verificar_conexão($origem_f, $destino_f);
-    if (sizeof($voos) == 1){
-        $this->voo = $voos[0];
-    if (sizeof($voos) == 2){
-        $this->voo = $voos[0];
-        $this->conexao = $voos[1];
-    }
+    //array to string conversion
+    $this->voo = $voos[0];
+    $this->conexao = $voos[1];
 }
-}
+
+
 public function set_cliente($cliente_f){
     try {
         if ($cliente_f instanceof Passageiro){
@@ -80,27 +77,44 @@ public function set_cliente($cliente_f){
         echo $e->getMessage();
     }
 }
-public function verificar_conexão(string $origem, string $destino){
-    $conjunto_voos = array();
-    foreach(VooPlanejado::$historico_planejado as $voo){
-         if($voo->VooPlanejado::get_origem() == $origem && $voo->VooPlanejado::get_destino() == $destino){
-            $conjunto_voos.array_push($voo);
-             return $conjunto_voos;
-         }else{
-            foreach(VooPlanejado::$historico_planejado as $voo1){
-                if ($voo1->VooPlanejado::get_origem() == $origem){
-                    foreach(VooPlanejado::$historico_planejado as $voo2){
-                        if($voo2->VooPlanejado::get_origem() == $voo1->VooPlanejado::get_destino() && $voo2->VooPlanejado::get_destino() == $destino){
-                            $conjunto_voos.array_push($voo1, $voo2);
-                            return $conjunto_voos;
-                        }else{
-                            return "Não há voos para o destino desejado";
-                        }
+public function verificar_conexão(Aeroporto $origem, Aeroporto $destino) {
+    $voos_proximos = VooPlanejado::buscar_proximos_voos();
+    $voos = [];
+    try{
+        // Verifica se existe algum voo direto
+        foreach ($voos_proximos as $voo) {
+            if ($voo->get_origem() === $origem && $voo->get_destino() === $destino) {
+                array_push($voos, $voo, null);
+                echo "Voo direto";
+                return $voos;
+            }
+        }
+        
+        // Verifica se existe algum voo com conexão
+        foreach ($voos_proximos as $voo) {
+            if ($voo->get_origem() === $origem) {
+                foreach ($voos_proximos as $voo_conexao) {
+                    if ($voo_conexao->get_destino() === $destino && $voo->get_hora_agenda_chegada() <= $voo_conexao->get_hora_agenda_saida()) {
+                        array_push($voos, $voo, $voo_conexao);
+                        echo "Voo com conexão";
+                        return $voos;
                     }
                 }
             }
-         } 
+        }
+        throw new Exception("Não existe voo direto ou com conexão");
+    } catch (Exception $e) {
+        echo $e->getMessage();
     }
-
 }
+public function string_passagem(){
+    $nome = $this->get_cliente()->get_nome_passageiro();
+    $sobrenome = $this->get_cliente()->get_sobrenome_passageiro();
+    $origem = $this->get_origem()->get_nome_aero();
+    $destino = $this->get_destino()->get_nome_aero();
+    $preco = $this->get_preco();
+    $franquia = $this->get_franquia();
+
+    return "Passagem comprada para $nome $sobrenome, de $origem para $destino, com franquia de $franquia kg e preço de R$$preco";
 }       
+}

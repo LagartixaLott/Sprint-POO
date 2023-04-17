@@ -7,18 +7,18 @@ include_once("Passagens.php");
 include_once("Usuario.php");
 include_once("VooDecolado.php");
 include_once("VooPlanejado.php");
+include_once("Assento.php");
 
-$atual = new DateTime("2022-10-01 19:31:45");
-$saida = new DateTime("2022-10-11 16:45:32");
-$chegada = new DateTime("2022-10-11 18:45:32");
-$novasaida = new DateTime("2022-10-11 18:35:32");
-$novachegada = new DateTime("2022-10-11 20:35:32");
+$saida = new DateTime("2023-04-19 16:45:32");
+$chegada = new DateTime("2023-04-20 18:45:32");
+$novasaida = new DateTime("2023-04-19 18:35:32");
+$novachegada = new DateTime("2023-04-20 20:35:32");
 //Test Cases para a classe CompanhiaAerea
 $companhia = new CompanhiaAerea("Gol", "Gol Linhas Aereas", "123", "15488222000172", "GL", "25");
 echo  $companhia->get_razao()."\n";
 //Test Cases para a classe Aeronave
-$aeronave = new Aeronave("Boeing", 27, "A-800", 186, 23600, "PR-GUO", $companhia);
-$nova_aeronave = new Aeronave("AeroBus", 35, "M-650", 186, 23600, "PR-GUO", $companhia);
+$aeronave = new Aeronave("Boeing", 27, "A-800", 186, 600, "PR-GUO", $companhia);
+$nova_aeronave = new Aeronave("AeroBus", 35, "M-650", 186, 600, "PR-GUO", $companhia);
 echo $aeronave->get_companhia_aerea()->get_nome()."\n";
 
 //Test Cases para a classe Aeroporto
@@ -42,19 +42,19 @@ echo $voo_planejado->get_hist_planejado();
 echo $voo_decolado->get_hist_executado();
 
 //Test Case para a classe Passageiro
-$passageiro = new Passageiro("Bruna", "Faria", "12345678914"); 
-echo $passageiro->get_nome_passageiro();
+$passageiro = new Passageiro("Bruna", "Faria", "12345678914", 2); 
+echo $passageiro->get_nome_passageiro()."\n";
 
 //Test Case para classe Assento
-$assento = new Assento("A","3", $passageiro);
-echo $assento->get_numero_assento();
+$assento = new Assento($voo_planejado, $passageiro, "15B");
+echo $voo_planejado->get_assentos_ocupados();
 
 //Test Case para venda de passagens em 30 dias
-$passagem = new Passagens($voo_planejado, $passageiro, $congonhas, $teresina, "1", "20", "50",'50');
-echo $passagem->$voo_planejado->VooPlanejado::get_origem();
+$passagem = new Passagens($congonhas, $teresina, $passageiro);
+echo $passagem->string_passagem();
 
 //Test Case conexão
-$passagem = new Passagens($voo_planejado, $passageiro, $congonhas, $guarulhos,"1", "20", "50", '50');
+$passagem = new Passagens($congonhas, $guarulhos, $passageiro);
 echo $passagem->get_preco();
 
 ?>

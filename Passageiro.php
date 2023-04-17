@@ -1,18 +1,19 @@
 <?php
 
 class Passageiro{
-   protected $nome_passageiro;
-    protected $sobrenome_passageiro;
-    protected $documento_passageiro;
-    protected $numero_bagagens;
+   protected string $nome_passageiro;
+    protected string $sobrenome_passageiro;
+    protected string $documento_passageiro;
+    protected int $numero_bagagens;
     
     
 
 
-public function __construct($nome_p, $sobrenome_p,$documento_p){
+public function __construct($nome_p, $sobrenome_p,$documento_p, $nbagagens_p){
     $this->set_nome_passeiro($nome_p);
     $this->set_sobrenome_passageiro($sobrenome_p);
     $this->set_documento_passageiro($documento_p);
+    $this->set_numero_bagagens($nbagagens_p);
 
 }
 public function set_nome_passeiro($nome_p){
