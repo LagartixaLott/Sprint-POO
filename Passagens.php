@@ -2,6 +2,7 @@
 
 include_once "VooPlanejado.php";
 include_once "Passageiro.php";
+include_once "Aeronave.php";
 class Passagens{
     protected VooPlanejado $voo;
     protected VooPlanejado $conexao;
@@ -11,7 +12,7 @@ class Passagens{
 
     #protected VooPlanejado $conexao;
 
-public function __constructPassagens($voo_f,$passageiro_f,$origem_f,$destino_f,$assento_f,$franquia_f,$tarifa_f, $preco_f){
+public function __construct($voo_f,$passageiro_f,$origem_f,$destino_f,$assento_f,$franquia_f,$tarifa_f, $preco_f){
     $this->set_voo($origem_f, $destino_f);
     $this->set_cliente($passageiro_f);
     $this->set_preco();
@@ -39,7 +40,7 @@ public function get_franquia(){
     return $this->voo->get_franquia();
 }
 public function get_tarifa(){
-    return $this->Aeronave->get_tarifa();
+    return $this->voo->Aviao_esperado->get_tarifa();
 }
 public function get_nbagagens(){
     return $this->passageiro->get_nbagagens();
@@ -102,8 +103,4 @@ public function verificar_conexão(string $origem, string $destino){
     }
 
 }
-
-
-
-
 }       
