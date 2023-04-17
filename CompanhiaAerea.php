@@ -78,7 +78,7 @@ public function set_nome_comp($nome_f){
 
 public function set_razao($razao_f){
     try{
-        if (ctype_alpha($razao_f)){
+        if (is_string($razao_f)){
             $this->razao_social = $razao_f;
         }else{
             throw new Exception("Razão social inválida");

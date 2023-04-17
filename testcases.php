@@ -5,7 +5,7 @@ include_once("CompanhiaAerea.php");
 include_once("Passageiro.php");
 include_once("Passagens.php");
 include_once("Usuario.php");
-include_once("Viagem.php");
+include_once("VooDecolado.php");
 include_once("VooPlanejado.php");
 
 $atual = new DateTime("2022-10-01 19:31:45");
@@ -14,7 +14,7 @@ $chegada = new DateTime("2022-10-11 18:45:32");
 $novasaida = new DateTime("2022-10-11 18:35:32");
 $novachegada = new DateTime("2022-10-11 20:35:32");
 //Test Cases para a classe CompanhiaAerea
-$companhia = new CompanhiaAerea("Gol", "Gol Linhas Aereas", "123", "15.488.222/0001-72", "GL", "25");
+$companhia = new CompanhiaAerea("Gol", "Gol Linhas Aereas", "123", "15488222000172", "GL", "25");
 echo  $companhia->get_razao()."\n";
 //Test Cases para a classe Aeronave
 $aeronave = new Aeronave("Boeing", 27, "A-800", 186, 23600, "PR-GUO", $companhia);
@@ -24,15 +24,16 @@ echo $aeronave->get_companhia_aerea()->get_nome()."\n";
 //Test Cases para a classe Aeroporto
 $congonhas = new Aeroporto("CNG", "Congonhas", "SP", "Aeroporto de Congonhas");
 $teresina = new Aeroporto("THE", "Teresina", "PI", "Aeroporto de Teresina");
+$guarulhos = new Aeroporto("GRU", "Guarulhos", "SP", "Aeroporto de Guarulhos");
 echo $congonhas->get_nome_aero()."\n";
 
 //Test Cases para a classe VooPlanejado
-$voo_planejado = new VooPlanejado("GL1234", $congonhas, $teresina,  $atual, $chegada, $saida, $aeronave, '2', 300);
+$voo_planejado = new VooPlanejado("GL1234", $congonhas, $teresina, $chegada, $saida, $aeronave, '2', '2', 50, 300);
 echo $voo_planejado->get_frequencia_voo()."\n";
-$voo_planejado2 = new VooPlanejado("GL1534", $teresina, $guarulhos,  $atual, $chegada, $saida, $aeronave, '2', 400);
+$voo_planejado2 = new VooPlanejado("GL1534", $teresina, $guarulhos, $chegada, $saida, $aeronave, '2', '2', 50, 400);
 
 //Test Case para código do VooPlanejado
-$voo = new VooPlanejado("GLP255",  $congonhas, $teresina, $atual, $chegada, $saida, $aeronave, '2', 600);
+$voo = new VooPlanejado("GL1255",  $congonhas, $teresina, $chegada, $saida, $aeronave, '2','2', 50, 600);
 
 //Test Cases para a classe VooDecolado
 $voo_decolado = new Viagem($voo_planejado, $novasaida, $novachegada, $nova_aeronave);

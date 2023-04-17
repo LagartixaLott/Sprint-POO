@@ -3,14 +3,8 @@
 #include_once("DadosVoos.php");
 include_once("Aeroporto.php");
 include_once("CompanhiaAerea.php");
-include_once("Assento.php");
 
-enum Frequencia{
-    const DIARIA = 1;
-    const SEMANAL = 2;
-    const QUINZENAL = 3;
-    const MENSAL = 4;
-}
+
 #array para guardar os voos planejado
 
 class VooPlanejado{
@@ -18,31 +12,51 @@ class VooPlanejado{
 protected string $codigo;
 protected Aeroporto $Aeroporto_origem;
 protected Aeroporto $Aeroporto_destino;
-protected DateTime $hora_atual;
 protected DateTime $hora_agendada_chegada;
 protected DateTime $hora_agendada_saida;
 protected Aeronave $Aviao_esperado;
-protected Frequencia $Frequencia_voo;
-protected Assento $assento;
+protected array $Frequencia_voo = ['dia', 'frequencia'];
 protected int $franquia;
 protected float $preco;
+protected array $assentos;
 public static array $historico_planejado = [];    
 
-public function __construct($codigo_f, $Aerop_origem_f,$Aerop_destino_f,$Hora_atual,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f,$frequencia_voo_f,$preco_f){
+public static $dict_frequencias = [
+    '1' => 'Diário',
+    '2' => 'Semanal',
+    '3' => 'Quinzenal',
+    '4' => 'Mensal',
+];
+public static $dict_dias = [
+    '1' => 'Domingo',
+    '2' =>'Segunda',
+    '3' => 'Terça',
+    '4' => 'Quarta',
+    '5' =>'Quinta',
+    '6' => 'Sexta',  
+    '7' => 'Sábado',
+];
+public function __construct($codigo_f,$Aerop_origem_f,$Aerop_destino_f,$Hora_agen_chegada_f,$Hora_agen_saida_f,$Aviao_esperado_f, $dia_f,$frequencia_voo_f, $franquia_f, $preco_f){
+    $this->set_aviao_esp($Aviao_esperado_f);
     $this->set_codigo($codigo_f);
     $this->set_origem($Aerop_origem_f);
     $this->set_destino($Aerop_destino_f);
     $this->set_hora_cheg_agend($Hora_agen_chegada_f);
     $this->set_hora_said_agend($Hora_agen_saida_f);
-    $this->set_aviao_esp($Aviao_esperado_f);
-    $this->set_frequencia($frequencia_voo_f);
+    $this->set_frequencia($frequencia_voo_f, $dia_f);
     $this->set_preco($preco_f);
     self::$historico_planejado[] = $this;
 }
 
-public function validar_codigo($codigo){
+public function validar_codigo($codigo, $Aviao_esperado_f): bool
+{
 //Codigo composto por 2 letras e 4 numeros
     $letras = substr($codigo,0,2);
+    $sigla_comp_aerea = $Aviao_esperado_f-> get_companhia_aerea() -> get_sigla();
+    if ($letras != $sigla_comp_aerea){
+        echo "Erro: Codigo do voo não corresponde a companhia aerea";
+        return false;
+    }
     $numeros = substr($codigo,2,4);
     if (ctype_alpha($letras) && ctype_digit($numeros)){
         return true;
@@ -50,73 +64,95 @@ public function validar_codigo($codigo){
         return false;
     }
 }
-
-public function get_assento(){
-    $string_assento = "Fileira:".$this->assento->get_fileira(). "Numero:".$this->assento->get_numero_assento();
-    return $string_assento;
-}
 public function get_franquia(){
     return $this->franquia;
 }
-public function get_frequencia_voo(){
-    return $this->Frequencia_voo;
+
+public function get_frequencia_voo(): string
+{
+    //retornar uma string com o dia e a frequencia
+    $str = '';
+    $str .= $this->Frequencia_voo[0];
+    $str .= ' ';
+    $str .= $this->Frequencia_voo[1];
+    return $str;
 }
 
-public function get_origem(){
+public function get_origem(): Aeroporto
+{
     return $this->Aeroporto_origem;
 }
 
-public function get_destino(){
+public function get_destino(): Aeroporto
+{
     return $this->Aeroporto_destino;
-}
-public function get_hora_atual(){
-    return $this->hora_atual;
-}
-public function get_hora_agenda_chegada(){
-    return $this->hora_agendada_chegada;
-}
-
-public function get_hora_agenda_saida(){
-    return $this->hora_agendada_saida;
-}
-
-public function get_codigo(){
-    return $this->codigo;
-}
-public function get_aviao_marcado(){
-    return $this->Aviao_esperado;
 }
 public function get_preco(){
     return $this->preco;
 }
-public static function get_hist_planejado(){
-        //deve retornar uma string com todos os voos planejados
-        $string = "";
-        foreach (self::$historico_planejado as $voo){
-            $string .= "Voo " . $voo->get_codigo() . " da " . $voo->get_aviao_marcado()->get_companhia_aerea()->get_nome() . " de " . $voo->get_origem()->get_sigla_aero() . " para " . $voo->get_destino()->get_sigla_aero() . " marcado para " . $voo->get_hora_agenda_saida()->format('d/m/Y H:i') . " com chegada " . $voo->get_hora_agenda_chegada()->format('d/m/Y H:i') . "\n";
-        }
-        return $string;
+
+public function get_hora_agenda_chegada(): DateTime
+{
+    return $this->hora_agendada_chegada;
 }
 
-public function set_assento_voo($assento_f){
-    if($this->assento->disponibilidade == true){
-        $this->assento->$assento_f;
-        $this->assento->disponibilidade = false;
+public function get_hora_agenda_saida(): DateTime
+{
+    return $this->hora_agendada_saida;
+}
+
+public function get_codigo(): string
+{
+    return $this->codigo;
+}
+public function get_aviao_marcado(): Aeronave
+{
+    return $this->Aviao_esperado;
+}
+// public function get_assento(){
+//     return $this->Aviao_esperado->assento;
+// }
+// public function get_tarifa(){
+//     return $this->Aviao_esperado->assento;
+// }
+public function set_preco($preco_f){
+    $this->preco = $preco_f;
+}
+public function set_assento(){
+    //numero de assentos é definido pelo aviao
+    $this->assentos[] = $this->Aviao_esperado->get_passageiro();
+}
+public function comprar_assento($assento){
+    //verificar se o assento está disponivel
+    if ($this->assentos[$assento] == null){
+        $this->assentos[$assento] = true;
+    }else{
+        echo "Assento indisponivel";
     }
 }
-public function set_frequencia($frequencia_voo_f){
+public function set_frequencia($frequencia_voo_f, $dia_f): void
+{
+    $dia = '';
+    $frequencia = '';
     try{
-        if (isset($frequencia_voo_f)) {
-            $this->Frequencia_voo = $frequencia_voo_f;
+        if (isset(self::$dict_frequencias[$frequencia_voo_f])) {
+            $frequencia = self::$dict_frequencias[$frequencia_voo_f];
         } else {
             throw new Exception("Código de frequência inválido.");
+        }
+        if (isset(self::$dict_dias[$dia_f])) {
+            $dia = self::$dict_dias[$dia_f];
+        } else {
+            throw new Exception("Código de dia inválido.");
         }
     }catch(Exception $e){
         echo $e->getMessage();
     }
+    $this->Frequencia_voo = [$dia, $frequencia];
 }
 
-public function set_aviao_esp($Aviao_esperado_f){
+public function set_aviao_esp($Aviao_esperado_f): void
+{
     try {
         if ($Aviao_esperado_f instanceof Aeronave){
             $this->Aviao_esperado = $Aviao_esperado_f;
@@ -128,7 +164,8 @@ public function set_aviao_esp($Aviao_esperado_f){
     }
 }
 
-public function set_hora_cheg_agend($hora_agendada_chegada_f){
+public function set_hora_cheg_agend($hora_agendada_chegada_f): void
+{
     try {
         if ($hora_agendada_chegada_f instanceof DateTime){
             $this->hora_agendada_chegada = $hora_agendada_chegada_f;
@@ -139,20 +176,21 @@ public function set_hora_cheg_agend($hora_agendada_chegada_f){
         echo $e->getMessage();
     }
 }
-public function set_hora_said_agend($hora_agendada_saida_f){
+public function set_hora_said_agend($hora_agendada_saida_f): void
+{
     try {
         if ($hora_agendada_saida_f instanceof DateTime){
-            if(abs($hora_agendada_saida_f-$this->hora_atual) >= 30)
             $this->hora_agendada_saida = $hora_agendada_saida_f;
         } else{
-            throw new Exception("Data/hora invalida");
+            throw new Exception("Hora invalida");
         }
     }catch(Exception $e){
         echo $e->getMessage();
     }
 }
 
-public function set_origem($Aerop_origem_f){
+public function set_origem($Aerop_origem_f): void
+{
     try {
         if ($Aerop_origem_f instanceof Aeroporto){
             $this->Aeroporto_origem = $Aerop_origem_f;
@@ -163,7 +201,8 @@ public function set_origem($Aerop_origem_f){
         echo $e->getMessage();
     }
 }
-public function set_destino($Aerop_destino_f){
+public function set_destino($Aerop_destino_f): void
+{
     try {
         if ($Aerop_destino_f instanceof Aeroporto){
             $this->Aeroporto_destino = $Aerop_destino_f;
@@ -174,9 +213,10 @@ public function set_destino($Aerop_destino_f){
         echo $e->getMessage();
     }
 }
-public function set_codigo($codigo_f){
+public function set_codigo($codigo_f): void
+{
     try {
-        if ($this->validar_codigo($codigo_f)){
+        if ($this->validar_codigo($codigo_f, $this->get_aviao_marcado())){
             $this->codigo = $codigo_f;
         } else{
             throw new Exception("Codigo invalido");
@@ -185,8 +225,36 @@ public function set_codigo($codigo_f){
         echo $e->getMessage();
     }
 }
-public function set_preco($preco_f){
-    $this->preco = $preco_f;
+public static function get_hist_planejado(): string
+{
+    //deve retornar uma string com todos os voos planejados
+    $string = "";
+    foreach (self::$historico_planejado as $voo){
+        $string .= "Voo " . $voo->get_codigo() . " da " . $voo->get_aviao_marcado()->get_companhia_aerea()->get_nome() . " de " . $voo->get_origem()->get_sigla_aero() . " para " . $voo->get_destino()->get_sigla_aero() . " marcado para " . $voo->get_hora_agenda_saida()->format('d/m/Y H:i') . " com chegada " . $voo->get_hora_agenda_chegada()->format('d/m/Y H:i') . "\n";
+    }
+    return $string;
 }
+public static function buscar_proximos_voos(): array
+    {
+        $agora = new DateTime();
+        $data_limite = $agora->modify('+30 days');
 
+        $voos_proximos = [];
+        foreach (self::$historico_planejado as $voo) {
+            if ($voo->hora_agendada_saida <= $data_limite) {
+                $voos_proximos[] = $voo;
+            }
+        }
+
+        return $voos_proximos;
+    }
+public static function proximos_voos_string(): string
+    {
+        $voos_proximos = self::buscar_proximos_voos();
+        $string = "";
+        foreach ($voos_proximos as $voo) {
+            $string .= "Voo " . $voo->get_codigo() . " da " . $voo->get_aviao_marcado()->get_companhia_aerea()->get_nome() . " de " . $voo->get_origem()->get_sigla_aero() . " para " . $voo->get_destino()->get_sigla_aero() . " marcado para " . $voo->get_hora_agenda_saida()->format('d/m/Y H:i') . " com chegada " . $voo->get_hora_agenda_chegada()->format('d/m/Y H:i') . "\n";
+        }
+        return $string;
+    }
 }
