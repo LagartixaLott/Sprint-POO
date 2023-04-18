@@ -29,7 +29,7 @@ echo $congonhas->get_nome_aero()."\n";
 
 //Test Cases para a classe VooPlanejado
 $voo_planejado = new VooPlanejado("GL1234", $congonhas, $teresina, $chegada, $saida, $aeronave, '2', '2', 50, 300);
-echo $voo_planejado->get_frequencia_voo()."\n";
+echo $voo_planejado->get_frequencia()."\n";
 $voo_planejado2 = new VooPlanejado("GL1534", $teresina, $guarulhos, $novachegada, $novasaida, $aeronave, '2', '2', 50, 400);
 
 //Test Case para código do VooPlanejado

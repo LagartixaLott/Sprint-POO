@@ -11,8 +11,6 @@ class Passagens{
     public static array $passagens = []; 
     protected float $preco;
 
-    #protected VooPlanejado $conexao;
-
 public function __construct(Aeroporto $origem_f, Aeroporto $destino_f, Passageiro $passageiro_f){
     $this->set_voo($origem_f, $destino_f);
     $this->set_cliente($passageiro_f);
@@ -38,7 +36,7 @@ public function get_franquia(){
     return $this->voo->get_franquia();
 }
 public function get_tarifa(){
-    return $this->voo->get_aviao_marcado()->get_tarifa();
+    return $this->voo->get_aviao()->get_tarifa();
 }
 public function get_nbagagens(){
     return $this->passageiro->get_nbagagens();
