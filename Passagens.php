@@ -58,7 +58,7 @@ public function comprar_bagagem(){
     return $nbagagens*$tarifa;
 }
 public function set_voo($origem_f, $destino_f){
-    echo "\n Verificando conexão";
+    echo "\nVerificando conexão";
     $voos = self::verificar_conexão($origem_f, $destino_f);
     //array to string conversion
     $this->voo = $voos[0];
@@ -71,7 +71,7 @@ public function set_cliente($cliente_f){
         if ($cliente_f instanceof Passageiro){
             $this->passageiro = $cliente_f;
         } else {
-            throw new InvalidArgumentException("Erro: o cliente não existe");
+            throw new InvalidArgumentException("\nErro: o cliente não existe");
         }
     } catch (InvalidArgumentException $e) {
         echo $e->getMessage();
@@ -85,7 +85,7 @@ public function verificar_conexão(Aeroporto $origem, Aeroporto $destino) {
         foreach ($voos_proximos as $voo) {
             if ($voo->get_origem() === $origem && $voo->get_destino() === $destino) {
                 array_push($voos, $voo, null);
-                echo "Voo direto";
+                echo "\nVoo direto";
                 return $voos;
             }
         }
@@ -96,13 +96,13 @@ public function verificar_conexão(Aeroporto $origem, Aeroporto $destino) {
                 foreach ($voos_proximos as $voo_conexao) {
                     if ($voo_conexao->get_destino() === $destino && $voo->get_hora_agenda_chegada() <= $voo_conexao->get_hora_agenda_saida()) {
                         array_push($voos, $voo, $voo_conexao);
-                        echo "Voo com conexão";
+                        echo "\nVoo com conexão";
                         return $voos;
                     }
                 }
             }
         }
-        throw new Exception("Não existe voo direto ou com conexão");
+        throw new Exception("\nNão existe voo direto ou com conexão");
     } catch (Exception $e) {
         echo $e->getMessage();
     }
@@ -115,6 +115,6 @@ public function string_passagem(){
     $preco = $this->get_preco();
     $franquia = $this->get_franquia();
 
-    return "Passagem comprada para $nome $sobrenome, de $origem para $destino, com franquia de $franquia kg e preço de R$$preco";
+    return "\nPassagem comprada para $nome $sobrenome, de $origem para $destino, com franquia de $franquia kg e preço de R$$preco";
 }       
 }
